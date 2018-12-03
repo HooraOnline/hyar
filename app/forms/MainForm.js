@@ -134,7 +134,7 @@ class MainForm extends Component {
                             </View>
                         }]} style={{}}></Tile>
                         <Tile vertical height={Util.device.height / 3.5} margin={0} cols={[{
-                            image: Api.getFilePath('design') +  this.props.disignInfo.mainFormsalamati.image, flex: 1,
+                            image: Api.getFilePath('design') +  this.props.disignInfo.mainFormsalamati.image, flex: 1, onPress: () => { Actions.MedicalTests() },
                             content: <Row style={{ height: '160%' }} >
                                 <Col style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }} >
                                     <Text style={{ color: '#fff', fontFamily: 'iran_sans_bold', fontSize: 18, alignSelf: 'center' }}>{this.props.disignInfo.mainFormsalamati.title}</Text>

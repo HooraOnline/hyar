@@ -30,6 +30,7 @@ import VideoList from './forms/video/VideoList.js';
 import NewsList from './forms/news/NewsList.js';
 import NewsMonitor from './forms/news/NewsMonitor.js';
 import VideoMonitor from './forms/video/VideoMonitor.js';
+import MedicalTests from './forms/health/MedicalTests.js';
 
 
 export default class App extends Component {
@@ -40,8 +41,8 @@ export default class App extends Component {
           <Scene key="root">
 
             
-            <Scene key="MainForm" component={MainForm} title="MainForm" hideNavBar={true} initial={true} />
-            <Scene key="TestForm" component={TestForm} title="TestForm" hideNavBar={true}   />
+            <Scene key="MainForm" component={MainForm} title="MainForm" hideNavBar={true}   />
+            <Scene key="TestForm" component={TestForm} title="TestForm" hideNavBar={true} initial={true} />
             {/****** Component*****/}
             <Scene key="ActionForm" component={ActionForm} title="ActionForm" hideNavBar={true} />
             <Scene key="ListBox" component={ListBox} title="ListBox" hideNavBar={true} />
@@ -53,6 +54,10 @@ export default class App extends Component {
             <Scene key="CheckInternet" component={CheckInternet} title="CheckInternet" hideNavBar={true} />
             <Scene key="SearchForm" component={SearchForm} title="SearchForm" hideNavBar={true} />
             <Scene key="EnterMobileForRegister" component={EnterMobileForRegister} title="EnterMobileForRegister" hideNavBar={true} />
+            
+            {/* components */}
+            <Scene key="MasterPage" component={MasterPage} title="MasterPage" hideNavBar={true} />
+            <Scene key="EntityComments" component={EntityComments} title="EntityComments" hideNavBar={true} />
 
             {/******HamrahYar Forms*****/}
             <Scene key="Services" component={Services} title="Services" hideNavBar={true} />
@@ -74,9 +79,8 @@ export default class App extends Component {
             <Scene key="PasswordRecovery" component={PasswordRecovery} title="PasswordRecovery" hideNavBar={true} />
             <Scene key="ColleagList" component={ColleagList} title="ColleagList" hideNavBar={true} />
             <Scene key="ContactColleague" component={ContactColleague} title="ContactColleague" hideNavBar={true} />
-            
-            <Scene key="MasterPage" component={MasterPage} title="MasterPage" hideNavBar={true} />
-            <Scene key="EntityComments" component={EntityComments} title="EntityComments" hideNavBar={true} />
+             {/* health */}
+             <Scene key="MedicalTests" component={MedicalTests} title="MedicalTests" hideNavBar={true} />
           </Scene>
         </Router>
       </Root>

@@ -66,10 +66,11 @@ class ListLoader extends Component {
                 this.state.inSearching = true;
             });
     }
-    filter = (filter, filterBox) => {
-        let condition = { or: [] };
-        condition.or.push(filter)
-        this.search(condition);
+    filterList = (filter) => {
+        this.filter=filter;
+        this.state.dataArray = [];
+        this.state.pageIndex = 0;
+        this.loadData();
     }
     removeFilter = () => {
         this.state.dataArray = [];
@@ -222,7 +223,7 @@ class ListLoader extends Component {
                             {
                                 this.state.filterbarItems &&
                                 <View style={{ flex: 1 }}>
-                                    <FilterLine list={this} items={this.state.filterbarItems} onfilter={this.props.onfilter} textStyle={this.props.filterbartextStyle} style={this.props.filterbarStyle} />
+                                    <FilterLine filterList={(filter)=>this.filterList(filter)} items={this.state.filterbarItems} onfilter={this.props.onfilter} textStyle={this.props.filterbartextStyle} style={this.props.filterbarStyle} />
                                 </View>
                             }
                             {
