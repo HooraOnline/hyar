@@ -1,0 +1,575 @@
+  propel:
+  _attributes:
+    pakage: lib.model
+    defaultIdMethod: native
+
+  user:
+    id:              { type: INTEGER, size: 11, primeryKey: true, autoIncrement: true, required: true }
+    password_type:   { type: VARCHAR, size: 10, defaultValue: "md5" }
+    password:        { type: VARCHAR, size: 200, required: true }
+    first_name:      { type: VARCHAR, size: 200, required: false }
+    last_name:       { type: VARCHAR, size: 200, required: false }
+    mostakhdemi_code:{ type: VARCHAR, size: 200, required: false }
+    employee_code:   { type: VARCHAR, size: 200, required: false }
+    phone:           { type: VARCHAR, size: 300, required: false }
+    email:           { type: VARCHAR, size: 128, required: true }
+    forgot_key:      { type: VARCHAR, size: 200, required: false }
+    remember_key:    { type: VARCHAR, size: 200, required: false }
+    enable:          { type: BOOLEAN, defaultValue: true }
+    sex:             { type: CHAR, required: false }
+    gcm_push_id:     { type: VARCHAR, size: 1024 }
+    created_at:
+    _uniques:        { email: [ email ] }
+
+  user_app:
+    id:                    ~
+    user_id:               { type: INTEGER, primaryKey: false, foreignTable: user, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    mobile:                { type: VARCHAR, size: 300, required: false }
+    mobile_session_token:  { type: varchar, size: 128 }
+    mobile_last_login_at:  { type: VARCHAR, size: 128 }
+    is_pv:                 { type: BOOLEAN, defaultValue: 0 }
+    is_approved:           { type: BOOLEAN, defaultValue: 0 }
+    is_guest:              { type: BOOLEAN, defaultValue: 0 }
+    imei:                  { type: VARCHAR, size: 128 }
+    device_name:           { type: VARCHAR, size: 128 }
+    app_version:           { type: INTEGER, defaultValue: 0 }
+    last_login_ip:         { type: VARCHAR, size: 64 }
+    no_login_attempt:      { type: INTEGER, defaultValue: 0 }
+    no_login_attempt_temp: { type: INTEGER, defaultValue: 0 }
+    is_malicious:          { type: BOOLEAN, defaultValue: 0 }
+    is_stolen:             { type: BOOLEAN, defaultValue: 0 }
+    food_token:            { type: varchar, size: 128 }
+    created_at:
+
+  role:
+    id:                    ~
+    name:                  { type: varchar, size: 128 }
+    descriptor:            { type: varchar, size: 128 }
+
+  user_role:
+    user_id:               { type: INTEGER, required: true, primaryKey: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    role_id:               { type: INTEGER, required: true, primaryKey: true, foreignTable: role, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+
+  culture_type:
+    id:                    ~
+    name:                  { type: varchar, size: 128 }
+    descriptor:            { type: varchar, size: 128 }
+
+  organization_chart:
+    id:                    ~
+    organization_unit_type_id: { type: INTEGER, primaryKey: false, required: false, foreignTable: organization_unit_type, foreignReference: id, onDelete: RESTRICT, onUpdate: CASCADE }
+    parent_id:             { type: INTEGER, primaryKey: false, foreignTable: organization_chart, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    enable:                { type: BOOLEAN, defaultValue: true }
+    code:                  { type: BIGINT}
+
+
+  organization_chart_i18n:
+    organization_chart_id: { type: INTEGER, primaryKey: true, foreignTable: organization_chart, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    culture_type_id:       { type: INTEGER, primaryKey: true, foreignTable: culture_type, foreignReference: id, required: true, onDelete: RESTRICT, onUpdate: CASCADE }
+    name:                  { type: varchar, size: 256 }
+
+
+  organization_unit_type:
+    id:                    ~
+    name:                  { type: varchar, size: 128 }
+    descriptor:            { type: varchar, size: 128 }
+
+  job_position:
+    id:                    ~
+    organization_chart_id: { type: INTEGER, primaryKey: false, foreignTable: organization_chart, foreignReference: id, required: true, onDelete: RESTRICT, onUpdate: CASCADE }
+    is_manager:            { type: BOOLEAN, defaultValue: false }
+    name:                  { type: varchar, size: 256 }
+
+  user_assign_job_position:
+    id:                    ~
+    user_id:               { type: INTEGER, primaryKey: false, foreignTable: user, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    job_position_id:       { type: INTEGER, primaryKey: false, foreignTable: job_position, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    from_time:             { type: varchar, size: 128 }
+    to_time:               { type: varchar, size: 128 }
+
+  task:
+    id:                    ~
+    name:                  { type: VARCHAR, size: 256 }
+    description:           { type: VARCHAR, size: 1024 }
+    enable:                { type: BOOLEAN, defaultValue: true }
+
+  task_role:
+    id:                    ~
+    task_id:               { type: INTEGER, primaryKey: false, foreignTable: task, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    name:                  { type: varchar, size: 128 }
+    descriptor:            { type: varchar, size: 128 }
+
+  task_role_job_position:
+    task_role_id:          { type: INTEGER, primaryKey: true, foreignTable: task_role, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    job_position_id:       { type: INTEGER, primaryKey: true, foreignTable: job_position, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+
+  task_workflow:
+    id:                    ~
+    task_role_id:          { type: INTEGER, primaryKey: false, foreignTable: task_role, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    from_status:           { type: INTEGER, required: true }
+    to_status:             { type: INTEGER, required: true }
+    with_text:             { type: VARCHAR, size: 256 }
+
+  task_log:
+    id:                    ~
+    user_id:               { type: INTEGER, primaryKey: false, foreignTable: user, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    task_id:               { type: INTEGER, primaryKey: false, foreignTable: task, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    object_id:             { type: INTEGER, required: true }
+    from_status:           { type: INTEGER, required: false }
+    to_status:             { type: INTEGER, required: false }
+    created_at:
+    updated_at:
+
+
+
+  contact:
+    id:                    ~
+    user_app_id:           { type: INTEGER, primaryKey: false, foreignTable: user_app, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    local_id:              { type: INTEGER, required: true }
+    name:                  { type: VARCHAR, size: 256 }
+    organization_chart_id: { type: INTEGER, required: false }
+    created_at:            { type: VARCHAR, size: 256 }
+    updated_at:            { type: VARCHAR, size: 256 }
+    deleted_at:            { type: VARCHAR, size: 256 }
+    is_deleted:            { type: BOOLEAN, required: false }
+    local_sync_version:    { type: INTEGER }
+    sync_version:          { type: INTEGER }
+
+  contact_type:
+    id:                    ~
+    name:                  { type: varchar, size: 128 }
+    descriptor:            { type: varchar, size: 128 }
+
+  contact_value:
+    id:                    ~
+    contact_id:            { type: INTEGER, primaryKey: false, foreignTable: contact, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    contact_type_id:       { type: INTEGER, primaryKey: false, foreignTable: contact_type, foreignReference: id, required: true, onDelete: RESTRICT, onUpdate: CASCADE }
+    value:                 { type: VARCHAR, size: 255 }
+
+  poll:
+    id:                    ~
+    unique_id:             { type: VARCHAR, size: 255 }
+    title:                 { type: VARCHAR, size: 1024 }
+    subtitle:              { type: VARCHAR, size: 1024 }
+    image_url:             { type: VARCHAR, size: 512 }
+    json_body:             { type: CLOB }
+    enable:                { type: BOOLEAN, defaultValue: true }
+    date:                  { type: VARCHAR, size: 255 }
+    from_date:             { type: VARCHAR, size: 255 }
+    to_date:               { type: VARCHAR, size: 255 }
+    reelection_enabled:    { type: BOOLEAN, defaultValue: false }
+
+  poll_question:
+    id:                    ~
+    poll_id:               { type: INTEGER, primaryKey: false, foreignTable: poll, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    title:                 { type: CLOB }
+    number:                { type: INTEGER, required: true }
+    multiple_choice:       { type: BOOLEAN, defaultValue: false }
+    enable:                { type: BOOLEAN, defaultValue: true }
+
+  poll_choice:
+    id:                    ~
+    poll_question_id:      { type: INTEGER, primaryKey: false, foreignTable: poll_question, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    number:                { type: INTEGER, required: true }
+    title:                 { type: CLOB }
+    enable:                { type: BOOLEAN, defaultValue: true }
+
+
+  poll_user:
+    id:                    ~
+    user_id:               { type: INTEGER, primaryKey: false, foreignTable: user, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    poll_id:               { type: INTEGER, primaryKey: false, foreignTable: poll, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    created_at:
+
+  poll_user_choice:
+    poll_user_id:          { type: INTEGER, primaryKey: true, foreignTable: poll_user, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    poll_choice_id:        { type: INTEGER, primaryKey: true, foreignTable: poll_choice, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+
+  news:
+    id:                    ~
+    unique_id:             { type: VARCHAR, size: 255 }
+    title:                 { type: VARCHAR, size: 255 }
+    headline:              { type: VARCHAR, size: 1024 }
+    body:                  { type: CLOB }
+    date:                  { type: VARCHAR, size: 255 }
+    image:                 { type: VARCHAR, size: 255 }
+    enable:                { type: BOOLEAN, defaultValue: true }
+    created_at:
+
+  api_version:
+    id:                         ~
+    customer_android_version:   { type: VARCHAR, size: 5 }
+    customer_android_mandatory: { type: BOOLEAN, defaultValue: false }
+    customer_android_message:   { type: VARCHAR, size: 512 }
+    customer_android_url:       { type: VARCHAR, sieze: 512 }
+    customer_ios_version:       { type: VARCHAR, size: 5 }
+    customer_ios_mandatory:     { type: BOOLEAN, defaultValue: false }
+    customer_ios_message:       { type: VARCHAR, size: 512 }
+    customer_ios_url:           { type: VARCHAR, sieze: 512 }
+    author_android_version:     { type: VARCHAR, size: 5 }
+    author_android_mandatory:   { type: BOOLEAN, defaultValue: false }
+    author_android_message:     { type: VARCHAR, size: 512 }
+    author_android_url:         { type: VARCHAR, sieze: 512 }
+    author_ios_version:         { type: VARCHAR, size: 5 }
+    author_ios_mandatory:       { type: BOOLEAN, defaultValue: false }
+    author_ios_message:         { type: VARCHAR, size: 512 }
+    author_ios_url:             { type: VARCHAR, sieze: 512 }
+
+
+# jazb
+  hamrah_jazb:
+    id:                         ~
+    server_id:                  { type: INTEGER, required: false }
+    name:                       { type: VARCHAR, size: 512 }
+    birth_year:                 { type: INTEGER, required: false }
+    reshteh:                    { type: VARCHAR, size: 512 }
+    daneshgah:                  { type: VARCHAR, size: 512 }
+    moaddel:                    { type: VARCHAR, size: 512 }
+    majmoo_bimeh:               { type: VARCHAR, size: 512 }
+    edareh_kol:                 { type: VARCHAR, size: 512 }
+    moavenat:                   { type: VARCHAR, size: 512 }
+    moavenat_id:                 { type: INTEGER, required: false }
+    mahal_kar_ghabli:           { type: VARCHAR, size: 512 }
+    shoghl_pishnehadi:          { type: VARCHAR, size: 512 }
+    ravesh_shenasaei:           { type: VARCHAR, size: 512 }
+    hoghoogh_darkhasti:         { type: VARCHAR, size: 512 }
+    kt_emtiaz_kol:              { type: INTEGER, required: false }
+    mo_name_karbar:             { type: VARCHAR, size: 512 }
+    mo_emtiaz:                  { type: INTEGER, required: false }
+    mo_nazar:                   { type: VARCHAR, size: 1024 }
+    mo_tozih:                   { type: VARCHAR, size: 1024 }
+    ar_vaziat:                  { type: VARCHAR, size: 1024 }
+    ar_nazarat:                 { type: VARCHAR, size: 1024 }
+    mizan_entebagh:             { type: VARCHAR, size: 512 }
+    hoghoogh_tavafoghi:         { type: VARCHAR, size: 512 }
+    nerkh_pir:                  { type: VARCHAR, size: 512 }
+    alalhesab_padash:           { type: VARCHAR, size: 512 }
+    hoghoogh_nahaei:            { type: VARCHAR, size: 512 }
+    tek_vaziat:                 { type: INTEGER, required: false }
+    tek_tozihat:                { type: VARCHAR, size: 512 }
+    tm_vaziat:                  { type: INTEGER, required: false }
+    tm_tozihat:                 { type: VARCHAR, size: 512 }
+    tmt_vaziat:                 { type: INTEGER, required: false }
+    tmt_tozihat:                { type: VARCHAR, size: 512 }
+    modir_vaziat:               { type: INTEGER, required: false }
+    modir_tozihat:              { type: VARCHAR, size: 512 }
+    status:                     { type: INTEGER, required: false }
+    tarikh_tanzim:              { type: VARCHAR, size: 512 }
+
+  hamrah_jazb_kt:
+    id:                         ~
+    hamrah_jazb_id:             { type: INTEGER, required: true, foreignTable: hamrah_jazb, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    number:                     { type: INTEGER, required: false }
+    name:                       { type: VARCHAR, size: 512 }
+    emtiaz:                     { type: INTEGER, required: false }
+    nazar:                      { type: VARCHAR, size: 512 }
+    tozih:                      { type: VARCHAR, size: 512 }
+
+  log_type:
+    id:                    ~
+    name:                  { type: varchar, size: 128 }
+    descriptor:            { type: varchar, size: 128 }
+
+  log:
+    id:                         ~
+    user_id:                    { type: INTEGER, required: false, foreignTable: user, foreignReference: id, onDelete: SETNULL, onUpdate: CASCADE }
+    user_app_id:                { type: INTEGER, required: false, foreignTable: user_app, foreignReference: id, onDelete: SETNULL, onUpdate: CASCADE }
+    log_type_id:                { type: INTEGER, required: true, foreignTable: log_type, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    api:                        { type: BOOLEAN, required: true }
+    ip:                         { type: VARCHAR, size: 16 }
+    object_id:                  { type: INTEGER, required: false }
+    created_at:
+
+  faq:
+    id: ~
+    question: {type: VARCHAR,  size: 1024, required: true}
+    answer: {type: CLOB,  required: false}
+    is_public: {type: BOOLEAN,  defaultValue: false, required: false}
+    enable: {type: BOOLEAN, defaultValue: false}
+    user_id: { type: INTEGER, required: false, foreignTable: user, foreignReference: id, onDelete: SETNULL, onUpdate: CASCADE }
+
+    created_at:   ~
+
+
+  phonebook:
+    id: ~
+    fname: {type: VARCHAR,  size: 200, required: false}
+    lname: {type: VARCHAR,  size: 200, required: false}
+    tel_internal: {type: INTEGER, required: false}
+    tel_direct:   {type: INTEGER, required: false}
+    email:  {type: VARCHAR,  size: 200, required: false}
+    code_moavenat:  {type: BIGINT, required: false}
+    name_moavenat:  {type: VARCHAR,  size: 200, required: false}
+    code_edare_kol: {type: BIGINT, required: false}
+    name_edare_kol: {type: VARCHAR,  size: 200, required: false}
+    code_edare: {type: BIGINT, required: false}
+    name_edare: {type: VARCHAR,  size: 200, required: false}
+    code_post:  {type: BIGINT, required: false}
+    onvan_post: {type: VARCHAR,  size: 200, required: false}
+    code_sathe_post:  {type: INTEGER, required: false}
+    name_sathe_post:  {type: VARCHAR,  size: 200, required: false}
+    group:      {type: INTEGER, required: false}
+    name_job:   {type: VARCHAR,  size: 200, required: false}
+    code_job:   {type: INTEGER, required: false}
+    code_noe_estekhdam: {type: INTEGER, required: false}
+    name_noe_estekhdam: {type: VARCHAR,  size: 200, required: false}
+    status:             {type: VARCHAR,  size: 200, required: false}
+
+
+
+  recent_cases_showOn:
+    id:     ~
+    name:   {type: VARCHAR,  size: 200, required: false}
+    persian_name:   {type: VARCHAR,  size: 200, required: false}
+    enable:         { type: BOOLEAN, defaultValue: true}
+    created_at:   ~
+
+  recent_cases_modules:
+    id:     ~
+    name:   {type: VARCHAR,  size: 200, required: false}
+    persian_name:   {type: VARCHAR,  size: 200, required: false}
+    enable:         { type: BOOLEAN, defaultValue: true}
+    created_at:   ~
+
+  recent_cases:
+    id:     ~
+    title:      {type: VARCHAR, size: 200, required: false}
+    headLine:   {type: CLOB, required: false}
+    image_url:  {type: VARCHAR, size: 200, required: false }
+    recent_cases_showOn_id:       { type: INTEGER, required: true, foreignTable: recent_cases_showOn, foreignReference: id }
+    recent_cases_modules_id:      { type: INTEGER, required: true, foreignTable: recent_cases_modules, foreignReference: id }
+    caseId : {type: INTEGER, required: false}
+    enable:     {type: BOOLEAN, defaultValue: true}
+    created_at:   ~
+
+
+  medical_best_measure:
+    id:       ~
+    key:    {type: VARCHAR, size: 200, required: false}
+    value:  {type: CLOB, required: false}
+    enable:         { type: BOOLEAN, defaultValue: true}
+
+  medical_records:
+    id:       ~
+    shk:   {type: INTEGER, required: false}
+    shm:   {type: INTEGER, required: false}
+    number:   {type: VARCHAR, required: false, size: 8}
+    year:   {type: INTEGER, required: false, size: 8}
+    enable:         { type: BOOLEAN, defaultValue: true}
+    date:   {type: VARCHAR, required: false, size: 20}
+    fname:   {type: VARCHAR, required: false, size: 200}
+    lname:   {type: VARCHAR, required: false, size: 200}
+    age:   {type: INTEGER, required: false}
+    systolic:   {type: VARCHAR, required: false, size: 5}
+    diastolic:   {type: VARCHAR, required: false, size: 5}
+    examination_finding:   {type: CLOB, required: false}
+    right_vision:   {type: VARCHAR, required: false, size: 5}
+    left_vision:   {type: VARCHAR, required: false, size: 5}
+    ediometri:   {type: VARCHAR, required: false, size: 200}
+    spirometri:   {type: VARCHAR, required: false, size: 200}
+    ecg_result:   {type: VARCHAR, required: false, size: 200}
+    final_theoty:   {type: VARCHAR, required: false, size: 200}
+    medical_advice:   {type: CLOB, required: false}
+    conditions:   {type: CLOB, required: false}
+    reference:   {type: VARCHAR, required: false, size: 200}
+    FBS:   {type: VARCHAR, required: false, size: 200}
+    BUN:   {type: VARCHAR, required: false, size: 200}
+    Creatinine:   {type: VARCHAR, required: false, size: 200}
+    UricAcid:   {type: VARCHAR, required: false, size: 200}
+    Cholesterol:   {type: VARCHAR, required: false, size: 200}
+    TG:   {type: VARCHAR, required: false, size: 200}
+    HDL:   {type: VARCHAR, required: false, size: 200}
+    LDL:   {type: VARCHAR, required: false, size: 200}
+    SGOT:   {type: VARCHAR, required: false, size: 200}
+    SGPT:   {type: VARCHAR, required: false, size: 200}
+    AlkP:   {type: VARCHAR, required: false, size: 200}
+    WBC:   {type: VARCHAR, required: false, size: 200}
+    RBC:   {type: VARCHAR, required: false, size: 200}
+    HGB:   {type: VARCHAR, required: false, size: 200}
+    Hct:   {type: VARCHAR, required: false, size: 200}
+    MCV:   {type: VARCHAR, required: false, size: 200}
+    MCH:   {type: VARCHAR, required: false, size: 200}
+    MCHC:   {type: VARCHAR, required: false, size: 200}
+    Neutrophile:   {type: VARCHAR, required: false, size: 200}
+    Lymphocyte:   {type: VARCHAR, required: false, size: 200}
+    Monocyte:   {type: VARCHAR, required: false, size: 200}
+    Eosinophile:   {type: VARCHAR, required: false, size: 200}
+    BandCell:   {type: VARCHAR, required: false, size: 200}
+    Metamyelocyte:   {type: VARCHAR, required: false, size: 200}
+    Anisocytosis:   {type: VARCHAR, required: false, size: 200}
+    Microcyte:   {type: VARCHAR, required: false, size: 200}
+    Hypochromia:   {type: VARCHAR, required: false, size: 200}
+    TargetCell:   {type: VARCHAR, required: false, size: 200}
+    TearDrop:   {type: VARCHAR, required: false, size: 200}
+    Ovalocyte:   {type: VARCHAR, required: false, size: 200}
+    Elliptocyte:   {type: VARCHAR, required: false, size: 200}
+    RouloxFormation:   {type: VARCHAR, required: false, size: 200}
+    Platelet:   {type: VARCHAR, required: false, size: 200}
+    ESR:   {type: VARCHAR, required: false, size: 200}
+    U_AColor:   {type: VARCHAR, required: false, size: 200}
+    Apearance:   {type: VARCHAR, required: false, size: 200}
+    SG:   {type: VARCHAR, required: false, size: 200}
+    PH:   {type: VARCHAR, required: false, size: 200}
+    Proteine:   {type: VARCHAR, required: false, size: 200}
+    Glucose:   {type: VARCHAR, required: false, size: 200}
+    Bilirubin:   {type: VARCHAR, required: false, size: 200}
+    Urobilinogen:   {type: VARCHAR, required: false, size: 200}
+    Ketone:   {type: VARCHAR, required: false, size: 200}
+    Nitrite:   {type: VARCHAR, required: false, size: 200}
+    Hemoglobin:   {type: VARCHAR, required: false, size: 200}
+    Blood:   {type: VARCHAR, required: false, size: 200}
+    U_A_WBC:   {type: VARCHAR, required: false, size: 200}
+    U_A_RBC:   {type: VARCHAR, required: false, size: 200}
+    EpithelialCells:   {type: VARCHAR, required: false, size: 200}
+    Bacteria:   {type: VARCHAR, required: false, size: 200}
+    Mucus:   {type: VARCHAR, required: false, size: 200}
+    Cast:   {type: VARCHAR, required: false, size: 200}
+    Crystals:   {type: VARCHAR, required: false, size: 200}
+    Others:   {type: VARCHAR, required: false, size: 200}
+    PSA:   {type: VARCHAR, required: false, size: 200}
+    BloodGroup:   {type: VARCHAR, required: false, size: 200}
+    VitDOH:   {type: VARCHAR, required: false, size: 200}
+    RandomUrineProtein:   {type: VARCHAR, required: false, size: 200}
+    UrineOsmolality:   {type: VARCHAR, required: false, size: 200}
+    stature:   {type: INTEGER, required: false, size: 200}
+    weight:   {type: INTEGER, required: false, size: 200}
+    BMI:   {type: INTEGER, required: false, size: 200}
+    created_at:   ~
+
+
+
+
+  announcement_category:
+    id:             ~
+    title:          { type: VARCHAR, size: 200, required: true}
+    enable:         { type: BOOLEAN, defaultValue: true}
+    image:          { type: VARCHAR, size: 200, required: false }
+    is_deleted:     { type: BOOLEAN, defaultValue: true}
+    created_at:     ~
+
+  announcement:
+    id:             ~
+    title:          { type: VARCHAR, size: 200, required: true }
+    headLine:   {type: CLOB, required: false}
+    description:    { type: CLOB, required: false }
+    image:          { type: VARCHAR, size: 200, required: false }
+    file:           { type: VARCHAR, size: 200, required: false }
+    enable:         { type: BOOLEAN, defaultValue: true}
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+    announcement_category_id:       { type: INTEGER, required: true, foreignTable: announcement_category, foreignReference: id }
+    created_at:
+
+#  announcement_category_rel:
+#    announcement_id:                { type: integer, primaryKey: true, required: true, foreignTable: announcement, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+#    announcement_category_id:       { type: INTEGER, primaryKey: true, required: true, foreignTable: announcement_category, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+
+
+  monthly_tech_category:
+    id:              ~
+    title:           { type: VARCHAR, size: 200, required: true }
+    created_at:
+    enable:         { type: BOOLEAN, defaultValue: true}
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+
+  monthly_tech_number:
+    id:              ~
+    title:           { type: VARCHAR, size: 200, required: true }
+    created_at:
+    enable:         { type: BOOLEAN, defaultValue: true}
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+
+  monthly_tech_year:
+    id:              ~
+    title:           { type: VARCHAR, size: 200, required: true }
+    created_at:
+    enable:         { type: BOOLEAN, defaultValue: true}
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+
+  monthly_technology:
+    id:              ~
+    title:           { type: VARCHAR, size: 200, required: false }
+    headline:        { type: VARCHAR, size: 200, required: false }
+    body:            { type: CLOB, required: false }
+    image:           { type: VARCHAR, size: 200, required: true }
+    header_image:    {type: VARCHAR, size: 200, required: true }
+    file:           { type: VARCHAR, size: 200, required: false }
+    monthly_tech_category_id:         { type: INTEGER, required: true, foreignTable: monthly_tech_category, foreignReference: id }
+    monthly_tech_number_id:           { type: INTEGER, required: true, foreignTable: monthly_tech_number, foreignReference: id }
+    monthly_tech_year_id:             { type: INTEGER, required: true, foreignTable: monthly_tech_year, foreignReference: id }
+    created_at:                       ~
+    enable:         { type: BOOLEAN, defaultValue: true}
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+
+  video:
+    id:              ~
+    title:           { type: VARCHAR, size: 200, required: false }
+    headline:        { type: VARCHAR, size: 200, required: false }
+    body:            { type: CLOB, required: false }
+    image:           { type: VARCHAR, size: 200, required: true }
+    file:            {type: VARCHAR, size: 200, required: true }
+    enable:         { type: BOOLEAN, defaultValue: true}
+    video_category_id:         { type: INTEGER, required: true, foreignTable: video_category, foreignReference: id, onDelete: CASCADE, onUpdate: CASCADE }
+    created_at:                       ~
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+
+  video_category:
+    id:              ~
+    name:           { type: VARCHAR, size: 200, required: false }
+    descriptor:        { type: VARCHAR, size: 16, required: false }
+    image:           { type: VARCHAR, size: 200, required: true }
+    enable:         { type: BOOLEAN, defaultValue: true}
+    created_at:                       ~
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+
+  publications_category:
+    id:              ~
+    title:           { type: VARCHAR, size: 200, required: true }
+    descriptor:      { type: VARCHAR, size: 200, required: true }
+    parent_id:       { type: INTEGER, primaryKey: false, foreignTable: publications_category, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    image:          { type: VARCHAR, size: 200, required: false }
+    created_at:
+    enable:         { type: BOOLEAN, defaultValue: true}
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+
+
+  publications:
+    id:              ~
+    title:           { type: VARCHAR, size: 200, required: false }
+    headline:        { type: VARCHAR, size: 200, required: false }
+    body:            { type: CLOB, required: false }
+    image:           { type: VARCHAR, size: 200, required: true }
+    header_image:    {type: VARCHAR, size: 200, required: true }
+    file:           { type: VARCHAR, size: 200, required: false }
+    publications_category_id:         { type: INTEGER, required: true, foreignTable: publications_category, foreignReference: id }
+    created_at:                       ~
+    enable:         { type: BOOLEAN, defaultValue: true}
+    is_deleted:     { type: BOOLEAN, defaultValue: false}
+
+  bank_payments:
+    id:              { type: INTEGER, size: 11, primeryKey: true, autoIncrement: true, required: true }
+    employee_code:   { type: INTEGER, size: 11, required: true }
+    resnum:          { type: VARCHAR, size: 11, required: true }
+    timestamp:       { type: INTEGER, size: 10, required: true }
+    rand:            { type: INTEGER, size: 11, required: true }
+    refnum:          { type: VARCHAR, size: 35, required: false }
+    traceno:         { type: INTEGER, size: 11, required: false }
+    amount:          { type: INTEGER, size: 11, required: false }
+    status:          { type: VARCHAR, size: 20, required: false }
+    created_at:
+    _uniques:        { refnum: [ refnum ] }
+
+
+  user_saham:
+    id:              { type: INTEGER, size: 11, primeryKey: true, autoIncrement: true, required: true }
+    employee_code:   { type: VARCHAR, size: 20, required: true }
+    saham:           { type: INTEGER, size: 11, required: true }
+    price:           { type: BIGINT, required: true }
+    maximum_saham:   { type: INTEGER, size: 11, required: false }
+    payment_id:      { type: INTEGER, size: 11, required: false, foreignTable: bank_payments, foreignReference: id, onDelete: SETNULL, onUpdate: CASCADE }
+    payment_status:  { type: VARCHAR, size: 10, required: true, defaultValue: "pending"}
+
+  saham_payment:
+    id:                    ~
+    saham_id:               { type: INTEGER, primaryKey: false, foreignTable: user_saham, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    payment_id:             { type: INTEGER, primaryKey: false, foreignTable: bank_payments, foreignReference: id, required: true, onDelete: CASCADE, onUpdate: CASCADE }
+    created_at:
