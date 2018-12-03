@@ -7,7 +7,7 @@ import { configureStore } from './app/store'
 import Nav from './app/Nav.js';
 const store = configureStore({});
 import { Font } from 'expo';
-
+ 
  
 export default class App extends React.Component {
   constructor(props) {

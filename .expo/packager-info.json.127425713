@@ -1,0 +1,9 @@
+{
+  "expoServerNgrokUrl": "https://ep-7er.hooraonline.hamrahyarexpo.exp.direct",
+  "packagerNgrokUrl": "https://packager.ep-7er.hooraonline.hamrahyarexpo.exp.direct",
+  "ngrokPid": 12228,
+  "expoServerPort": null,
+  "devToolsPort": 19002,
+  "packagerPort": null,
+  "packagerPid": null
+}
