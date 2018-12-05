@@ -2,63 +2,67 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo';
-import { Row, Icon } from 'native-base';
+import { Row, Icon, Grid, Col } from 'native-base';
+
 export default class ColorBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //min:props.min || 0,
-      //max: props.max ||100,
-      //step:props.step || 10,
-      numbers: [10, 9, 80, 7, 6, 5, 4, 3, 2, 1, 0],       //Array.apply(null, {length: props.max || 100}).map(Number.call, Number)
-      userPin: 5,
-
+      numbers: ['0-5', '5-40', '40-100'].reverse(),       //Array.apply(null, {length: props.max || 100}).map(Number.call, Number)
+      ranges:this.props.ranges?this.props.ranges.reverse(): [{ range: [0,5], color: '#E6787D' }, { range: [5,40], color: '#9EE898' }, { range: [40,100], color: '#E6787D' },].reverse(),
+      pin: props.pin || 15,
+      width: props.width || 300,
+      counter: 0
     };
+    console.log('pin='+this.state.pin )
+    console.log('range1='+this.state.ranges[0].range[1] )
+    console.log((this.state.pin /this.state.ranges[this.state.ranges.length-1].range[1] ) * this.state.width)
+  }
+  renderColors = () => {
+
   }
   render() {
-
     return (
-      <View style={{ height: 60 }}>
-        <Row style={{ width: 200 }}>
+      <Grid style={{ height: 10, }}>
+
+        {/* <Row style={{ width: this.state.width, height: 20 }}>
           <LinearGradient
-            style={[{ width: 200, height: 20, borderRadius: 4, marginLeft: 9 }, this.props.style]}
-            colors={['#E74C3C', '#F9E79F', '#F9E79F', '#52BE80']}
+            style={[{ width:this.state.width, borderRadius: 4, }, this.props.style]}
+            colors={['#E6787D',  '#52BE80','#E6787D']}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 1 }}
           >
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <Text style={{ flex: 1, backgroundColor: 'transparent', fontFamily: 'iran_sans', fontSize: 13, color: '#fff', }}>  سالم </Text>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={{ flex: 1, backgroundColor: 'transparent', fontFamily: 'iran_sans', fontSize: 13, color: '#fff', }}>  خطرناک </Text>
               <Text style={{ flex: 1, backgroundColor: 'transparent', fontFamily: 'iran_sans', fontSize: 13, color: '#777', }}>  ریسک </Text>
               <Text style={{ flex: 1, backgroundColor: 'transparent', fontFamily: 'iran_sans', fontSize: 13, color: '#fff', }}>  خطرناک </Text>
             </View>
           </LinearGradient>
-        </Row>
-        <Row style={{ width: 205 }}>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: -10 }}>
-            {
-              this.state.numbers.map((i) => {
-
-                return <Text style={{ flex: 1, backgroundColor: 'transparent', fontFamily: 'iran_sans', fontSize: 12, color: '#777', }}>  {i} </Text>
-              })
-
-            }
+        </Row> */}
+        <Row style={{ width: this.state.width, justifyContent: 'flex-end', height: 20, }}>
+          <View style={{ width: (this.state.pin /this.state.ranges[0].range[1] ) * this.state.width, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+            <View style={{flexDirection:'row', justifyContent: 'flex-end', alignItems: 'flex-start', }}>
+              <Icon name='ios-man-outline' style={{ color: '#0c6366', fontSize: 25 }} />
+              <Text style={{ fontSize: 16, fontFamily: 'iran_sans', color: '#0c6366',paddingHorizontal:2 }}>{this.state.pin}</Text>
+            </View>
           </View>
         </Row>
-        <Row style={{ width: 200 }}>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: -10 }}>
-            {
-              this.state.numbers.map((i) => {
-                if (i == this.state.userPin)
-                  return <View>
-                    <Icon name='md-arrow-round-up' style={{ color: 'red', fontSize: 18 }} />
-                    <Text style={{ fontSize: 14, fontFamily: 'iran_sans',color:'red' }}>{this.state.userPin}</Text>
-                  </View>
-              })
-
-            }
-          </View>
+        <Row style={{ width: this.state.width, height: this.props.height, borderRadius: 4 }}>
+          {
+            this.state.ranges.map((r, index) => {
+              return <Col key={index} style={{ width: ((r.range[1]-r.range[0]) /this.state.ranges[index].range[1])*this.state.width, backgroundColor: r.color, }}></Col>
+            })
+          }
         </Row>
-      </View>
+        <Row style={{ width: this.state.width, height: 20, }}>
+          {
+            this.state.ranges.map((r, index) => {
+              return <Col key={index} style={{ width: ((r.range[1]-r.range[0]) /this.state.ranges[index].range[1] )*this.state.width, }}><Text style={{fontFamily:'iran_sans', fontSize:13, flex:1,textAlign:'left' }}>{r.range[1]}</Text></Col>
+            })
+          }
+        </Row>
+
+      </Grid>
     );
   }
 }

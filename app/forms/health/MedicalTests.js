@@ -111,28 +111,30 @@ class MedicalTests extends Component {
                     renderBody={(animateForm) => {
                         return <View style={{ flex: 1, }}>
                             <View style={{ flexDirection: 'row', }}>
-                                <Tile vertical height={Util.device.height / 4} flex={2} margin={3} cols={[{
+                                <Tile vertical height={200} flex={2} margin={3} cols={[{
                                     flex: 1,
-                                    content: <View style={{ height: '160%' }} >
-
-                                        <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 17, padding:3 }}>دید چشم راست</Text>
-                                        <ColorBar style={{margin:10}}/>
-
+                                    content: <View style={{ height: '160%', }} >
+                                        <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>آنزیم کبدی (SGOT)</Text>
+                                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                            <ColorBar width={200} height={15}  pin={15}
+                                                ranges={[{ range: [0, 5], color: '#E6787D' }, { range: [5, 40], color: '#9EE898' }, { range: [40, 100], color: '#E6787D' },]}
+                                            />
+                                        </View>
 
                                     </View>
                                 }, {
                                     flex: 1,
-                                    content: <Row style={{ height: '160%' }} >
-                                        <Col style={{ flex: 1, }} >
+                                    content: <View style={{ height: '160%', }} >
+                                        <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>کلسترول</Text>
+                                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                            <ColorBar width={200} height={15}  pin={100}
+                                                ranges={[{ range: [0, 200], color: '#9EE898' }, { range: [200, 240], color: '#EB984E' }, { range: [240, 300], color: '#E6787D' },]}
+                                            />
+                                        </View>
 
-                                        </Col>
-                                        <Col style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }} >
-                                            <Text style={{ color: '#fff', fontFamily: 'iran_sans_bold', fontSize: 18, alignSelf: 'center' }}>چربی</Text>
-                                        </Col>
-
-                                    </Row>
+                                    </View>
                                 }]} style={{}}></Tile>
-                                <Tile vertical height={Util.device.height / 4} margin={3} cols={[{
+                                <Tile vertical height={200} margin={3} cols={[{
                                     flex: 1,
                                     content: <Grid style={{ height: '100%' }} >
                                         <Row style={{ flex: 4, alignItems: 'center', justifyContent: 'center' }} >
@@ -222,7 +224,7 @@ class MedicalTests extends Component {
                     }}
 
                     renderFixedBar={(animateForm) => {
-                        return <View style={{ flex: 1, backgroundColor: '#0c6366' }}>
+                        return <View style={{ flex: 1, backgroundColor: '#839192' }}>
                             <FilterLine filterList={this.filterList} textStyle={{ color: '#fff' }} style={{ height: 50 }}
                                 items={[
                                     { text: '1397/05/18', field: 'date', value: '1397/05/18' },

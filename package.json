@@ -9,12 +9,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "^30.0.1",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "@ptomasroos/react-native-multi-slider": "^1.0.0",
     "@pusher/chatkit": "^0.7.17",
     "apisauce": "^1.0.0",
+    "expo": "^30.0.1",
     "native-base": "^2.8.1",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-native-gifted-chat": "^0.4.3",
     "react-native-image-progress": "^1.1.1",
     "react-native-progress": "^3.5.0",

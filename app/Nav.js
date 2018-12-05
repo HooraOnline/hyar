@@ -41,8 +41,8 @@ export default class App extends Component {
           <Scene key="root">
 
             
-            <Scene key="MainForm" component={MainForm} title="MainForm" hideNavBar={true}   />
-            <Scene key="TestForm" component={TestForm} title="TestForm" hideNavBar={true} initial={true} />
+            <Scene key="MainForm" component={MainForm} title="MainForm" hideNavBar={true}    initial={true}/>
+            <Scene key="TestForm" component={TestForm} title="TestForm" hideNavBar={true} />
             {/****** Component*****/}
             <Scene key="ActionForm" component={ActionForm} title="ActionForm" hideNavBar={true} />
             <Scene key="ListBox" component={ListBox} title="ListBox" hideNavBar={true} />
