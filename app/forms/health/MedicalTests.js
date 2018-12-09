@@ -14,14 +14,9 @@ import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../../aRedux';
 import Api from '../../lib/api';
 import AnimatForm from '../../components/Form/animation/AnimatForm';
-import { Tile } from '../../components/Tile';
 import FilterLine from '../../components/tools/FilterLine';
 import ColorBar from '../../components/tools/ColorBar';
-import ColorBarVertical from './ColorBarVertical';
 
-//import PieChart from 'react-native-pie-chart';
-import { Constants, Svg } from 'expo';
-import CircleColor from './CircleColor';
 
 class MedicalTests extends Component {
 
@@ -246,11 +241,11 @@ class MedicalTests extends Component {
                     }}
 
                     renderFixedBar={(animateForm) => {
-                        return <View style={{ flex: 1, backgroundColor: '#839192' }}>
-                            <FilterLine filterList={this.filterList} textStyle={{ color: '#fff' }} style={{ height: 50, flex: 1 }}
+                        return   <FilterLine filterList={this.filterList} textStyle={{ color: '#fff' }} style={{ height: 50, flex: 1 }}
                                 items={this.state.filterItems}
                             />
-                        </View>
+                          
+                      
                     }
 
                     }

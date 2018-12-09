@@ -73,7 +73,7 @@ export function fetchPagedList(apiPath, storeKey, condition, sort,pageIndex,page
   return (dispatch, getState) => {
     //let state = getState();
     let limit=pageSize || 10;
-    let skip=pageIndex * pageSize;
+    let skip=(pageIndex || 0) * (pageSize || 10);
     return Api.fetchCollection(apiPath, condition, sort,limit,skip)
       .then(list => {
         if (storeKey){
