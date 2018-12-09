@@ -10,20 +10,17 @@ export default class ColorBar extends Component {
     this.state = {
       numbers: ['0-5', '5-40', '40-100'].reverse(),       //Array.apply(null, {length: props.max || 100}).map(Number.call, Number)
       ranges:this.props.ranges?this.props.ranges.reverse(): [{ range: [0,5], color: '#E6787D' }, { range: [5,40], color: '#9EE898' }, { range: [40,100], color: '#E6787D' },].reverse(),
-      pin: props.pin || 15,
       width: props.width || 300,
       counter: 0
     };
-    console.log('pin='+this.state.pin )
-    console.log('range1='+this.state.ranges[0].range[1] )
-    console.log((this.state.pin /this.state.ranges[this.state.ranges.length-1].range[1] ) * this.state.width)
+   
   }
   renderColors = () => {
 
   }
   render() {
     return (
-      <Grid style={{ height: 10, }}>
+      <Grid style={[{ height: 10, },this.props.style]}>
 
         {/* <Row style={{ width: this.state.width, height: 20 }}>
           <LinearGradient
@@ -40,10 +37,10 @@ export default class ColorBar extends Component {
           </LinearGradient>
         </Row> */}
         <Row style={{ width: this.state.width, justifyContent: 'flex-end', height: 20, }}>
-          <View style={{ width: (this.state.pin /this.state.ranges[0].range[1] ) * this.state.width, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+          <View style={{ width: (Number(this.props.pin )/this.state.ranges[0].range[1] ) * this.state.width, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-end' }}>
             <View style={{flexDirection:'row', justifyContent: 'flex-end', alignItems: 'flex-start', }}>
               <Icon name='ios-man-outline' style={{ color: '#0c6366', fontSize: 25 }} />
-              <Text style={{ fontSize: 16, fontFamily: 'iran_sans', color: '#0c6366',paddingHorizontal:2 }}>{this.state.pin}</Text>
+              <Text style={{ fontSize: 16, fontFamily: 'iran_sans', color: '#0c6366',paddingHorizontal:2 }}>{this.props.pin}</Text>
             </View>
           </View>
         </Row>

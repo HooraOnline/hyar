@@ -156,11 +156,10 @@ const styles = StyleSheet.create({
     },
     lableStyle: {
         flex: 1,
-        fontWeight: 'bold',
         textAlign: 'left',
         marginBottom: 5,
-        fontFamily: 'iran_sans',
-        fontSize:12,
+        fontFamily: 'iran_sans_bold',
+        fontSize:13,
         //textDecorationLine: 'underline',
     },
     viewStyle: {

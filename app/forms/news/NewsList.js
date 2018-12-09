@@ -14,6 +14,7 @@ import { ActionCreators } from '../../aRedux';
 import Api from '../../lib/api';
 import { Album } from '../../components/Album';
 import ListLoader from '../../components/Form/ListLoader';
+import NewsViewer from './NewsViewer';
 
 
 class NewsList extends Component {
@@ -37,7 +38,7 @@ class NewsList extends Component {
             for (let i = 0; i < nList.length; ++i)
                 topNews.push({
                     image: Api.getFilePath('news') + nList[i].image,
-                    onPress: () => Actions.EntityComments({ entity: nList[i] }),
+                    onPress: () => Actions.EntityComments({ entity: nList[i] ,apiPath:'news',modelName:'news',entityMonitor:<NewsViewer entity={nList[i]} />}),
                     content: <Grid style={{ flex: 1 }} >
                         <Row style={{}} >
                             <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', flex: 1, margin: 15 }}>

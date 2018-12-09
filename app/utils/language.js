@@ -7,7 +7,7 @@ console.log(cUser.lang)
 let lang=cUser.lang;
 dic.fa={};
 dic.en={};
-dic.fa['hamrhayar_1397']='همراه یار 1397'; dic.en['hamrhayar_1397']='HamrahYar 2018'
+dic.fa['hamrhayar_1397']='هم راه 1397'; dic.en['hamrhayar_1397']='HamrahYar 2018'
 dic.fa['Mobile_number_not_arrived']='شماره موبایل وارد نشده'; dic.en['Mobile_number_not_arrived']='Mobile number not arrived';
 dic.fa['enter_your_mobile']='شماره موبایل خود را وارد کنید.';dic.en['enter_your_mobile']='Enter your mobile.';
 dic.fa['register_before']='قبلا ثبت نام کرده ام.';dic.en['register_before']='I have already registered.';

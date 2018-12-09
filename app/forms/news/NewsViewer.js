@@ -30,7 +30,8 @@ class NewsViewer extends Component {
         if (!this.props.entity)
             return;
         this.props.entity.seen = this.props.entity.seen ? this.props.entity.seen + 1 : 1;
-        this.props.updateEntity('news', this.props.entity);
+        if (this.props.updateEntity)
+            this.props.updateEntity('news', this.props.entity);
     }
     componentDidMount() {
         this.addToseen();
@@ -61,26 +62,26 @@ class NewsViewer extends Component {
 
                     {
                         this.props.shortText ?
-                            <TouchableOpacity style={{}} onPress={() => { Actions.EntityComments({ entity: this.props.entity }) }}>
+                            <TouchableOpacity style={{}} onPress={() => { Actions.EntityComments({ entity: this.props.entity, apiPath: 'news', modelName: 'news', entityMonitor: <NewsViewer entity={this.props.entity} /> }) }}>
                                 <Text style={{ fontFamily: 'iran_sans', fontSize: 15, paddingHorizontal: 12, }}>{this.props.entity.text.substring(0, 150) + '...   '}<Text style={{ fontFamily: 'iran_sans', fontSize: 18, paddingHorizontal: 12, color: 'red' }}>ادامه خبر</Text></Text>
                             </TouchableOpacity>
                             : <Text style={{ fontFamily: 'iran_sans', fontSize: 15, paddingHorizontal: 12, }}>{this.props.entity.text}</Text>
                     }
                 </View>
                 <View style={{ margin: 8, flexDirection: 'row' }}>
-                    <Col style={{ width: 120,justifyContent:'center' }} >
+                    <Col style={{ width: 120, justifyContent: 'center' }} >
                         <PersianDate jsonDate={this.props.entity.udate} format='dateTime' style={{ backgroundColor: '#00ced1', textAlign: 'center', paddingHorizontal: 5, fontSize: 12, paddingTop: 1, height: 20, fontFamily: 'iran_sans', color: '#fff' }} />
                     </Col>
                     <Col style={{ flex: 1 }} >
 
                     </Col>
                     <Col style={{ flex: 1 }} >
-                        <Like apiPath="news" color='#00ced1' storeKey="currentEntity2" entity={this.props.entity} likeColor='red'/>
+                        <Like apiPath="news" color='#00ced1' storeKey="currentEntity2" entity={this.props.entity} likeColor='red' />
                     </Col>
                     <Col style={{ flex: 1 }} >
                         <Text style={{ paddingHorizontal: 10, fontSize: 12, color: '#00ced1', fontFamily: 'iran_sans' }}><Icon name='md-eye' style={{ color: '#00ced1', fontSize: 18 }} /> {this.props.entity.seen || 0}</Text>
                     </Col>
-                    <Col style={{ flex: 1 }} onPress={() => { Actions.EntityComments({ entity: this.props.entity }) }}>
+                    <Col style={{ flex: 1 }} onPress={() => { Actions.EntityComments({ entity: this.props.entity, apiPath: 'news', modelName: 'news', entityMonitor: <NewsViewer entity={this.props.entity} /> }) }}>
                         <Text style={{ paddingHorizontal: 10, fontSize: 12, color: '#00ced1', fontFamily: 'iran_sans' }}><Icon name='md-chatbubbles' style={{ color: '#00ced1', fontSize: 18 }} /> {this.props.entity.commentNumber || 0}</Text>
                     </Col>
                 </View>

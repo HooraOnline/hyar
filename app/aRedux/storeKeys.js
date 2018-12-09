@@ -11,5 +11,6 @@ export const cUser = {};
 export const disignInfo = [];
 //masterPage Props
 export const showFooter = true;
+export const userHealthInfo = [];
 
 

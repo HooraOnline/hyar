@@ -1,9 +1,9 @@
 {
   "expoServerNgrokUrl": "https://wy-fcz.hooraonline.client-expo.exp.direct",
   "packagerNgrokUrl": "https://packager.wy-fcz.hooraonline.client-expo.exp.direct",
-  "ngrokPid": 9208,
+  "ngrokPid": 1108,
   "expoServerPort": 19000,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 6720
+  "packagerPid": 13568
 }

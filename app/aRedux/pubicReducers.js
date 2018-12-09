@@ -38,3 +38,4 @@ export const appConfig = reduser.appConfig;
 
  //masterPage reduser
  export const showFooter = reduser.showFooter;
+ export const userHealthInfo = reduser.userHealthInfo;

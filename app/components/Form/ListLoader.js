@@ -180,7 +180,7 @@ class ListLoader extends Component {
                                             }
                                         </TouchableOpacity>
 
-                                        <Line color={this.props.seperatorColor} height={this.props.seperatorHight || 0.3} margin={this.props.seperatorMargin || 2} padding={this.props.seperatorPadding || 20} />
+                                        <Line color={this.props.seperatorColor} height={this.props.seperatorHight || 1} margin={this.props.seperatorMargin || 2} padding={this.props.seperatorPadding || 20} />
                                        
                                     </View>
                                 )}

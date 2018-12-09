@@ -191,7 +191,7 @@ class Api {
     //       json = JSON.parse(resp._bodyInit)
     //     } catch (ex) {
     //       Toast.show({
-    //         text: "سرور خاموش می باشد. لطقا با بخش پشتیبانی همراه یار تماس بگیرید.",
+    //         text: "سرور خاموش می باشد. لطقا با بخش پشتیبانی هم راه تماس بگیرید.",
     //         duration: 50000,
     //         type: 'danger',
     //         position: "top"

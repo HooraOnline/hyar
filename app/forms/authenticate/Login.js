@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 //     Row,
 // } from 'native-base';
 
-import {BackHandler,View, Image, StyleSheet, TextInput, Text, TouchableOpacity, ScrollView, Button } from 'react-native';
+import { BackHandler, View, Image, StyleSheet, TextInput, Text, TouchableOpacity, I18nManager, } from 'react-native';
 import connect from 'react-redux/lib/connect/connect';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../../aRedux';
@@ -15,6 +15,7 @@ import { Toast, Icon, Footer, Container, Content } from 'native-base';
 import { dataAdapter } from '../../lib/dataAdapter';
 import { Actions } from 'react-native-router-flux';
 import { Util } from '../../lib/util';
+
 class Login extends Component {
     constructor(props) {
         super(props)
@@ -22,6 +23,7 @@ class Login extends Component {
             username: '',
             password: ''
         }
+
     }
     validate = (entity) => {
         if (!entity.username)
@@ -44,13 +46,16 @@ class Login extends Component {
         }
         dataAdapter.login(this.state.username, this.state.password)
             .then((res) => {
-                Actions.MainForm();
-                this.props.doDispatch('cUser', res.member);
-                BackHandler.alow = true;
                 Util.saveTokenInStorage(res.member.id, res.member.token);
+                if (I18nManager.isRTL) {
+                    Actions.MainForm();
+                    this.props.doDispatch('cUser', res.member);
+                } else {
+                    Expo.Util.reload();
+                }
             })
             .catch((e) => {
-
+                console.log(e)
                 if (e.statusCode == 401)
                     Toast.show({
                         text: 'نام کاربری  یا کلمه عبور نادرست می باشد.',
@@ -67,9 +72,24 @@ class Login extends Component {
                     })
             })
     }
-    componentWillMount(){
-       
+    componentDidMount() {
+
+
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+    }
+
+    handleBackPress = () => {
+        if (Actions.currentParams.title == "Login") {
+            //this.goBack();
+            return true;
+        }
+        return false;
+    }
+
     render() {
         return (
             <Container style={{ flex: 1, height: '100%' }}>
@@ -82,19 +102,36 @@ class Login extends Component {
                     <TextInput style={styles.input} onChangeText={(password) => this.setState({ password })} placeholder="رمز عبور" underlineColorAndroid="transparent" secureTextEntry />
 
                     <View style={{ marginTop: 9 }} />
-                    <View style={{ flexDirection: 'row', marginHorizontal: 25 }}>
-                        <Icon name='ios-lock-outline' style={{ fontSize: 25, color: '#7f735f' }} />
-                        <TouchableOpacity
-                            onPress={() => {Actions.PasswordRecovery() }}
-                            title="رمز عبور را فراموش کرده ام"
-                            accessibilityLabel="رمز عبور را فراموش کرده ام"
-                        >
-                            <Text style={styles.forgetStyle}>رمز عبور را فراموش کرده ام</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {
+                        I18nManager.isRTL ? <View style={{ flexDirection: 'row', marginHorizontal: 25, justifyContent:'flex-start' }}>
+                            <Icon name='ios-lock-outline' style={{ fontSize: 25, color: '#7f735f', }} />
+                            <TouchableOpacity
+                                onPress={() => { Actions.PasswordRecovery() }}
+                                title="رمز عبور را فراموش کرده ام"
+                                accessibilityLabel="رمز عبور را فراموش کرده ام"
+                            >
+                                <Text style={styles.forgetStyle}>رمز عبور را فراموش کرده ام</Text>
+                            </TouchableOpacity>
+                           
+                        </View>
+                            :
+                            <View style={{ flexDirection: 'row', marginHorizontal: 25, justifyContent: 'flex-end' }}>
+                              
+                                <TouchableOpacity
+                                    onPress={() => { Actions.PasswordRecovery() }}
+                                    title="رمز عبور را فراموش کرده ام"
+                                    accessibilityLabel="رمز عبور را فراموش کرده ام"
+                                >
+                                    <Text style={styles.forgetStyle}>رمز عبور را فراموش کرده ام</Text>
+                                </TouchableOpacity>
+                                <Icon name='ios-lock-outline' style={{ fontSize: 25, color: '#7f735f', }} />
+                                
+                            </View>
+                    }
+
                     <TouchableOpacity
                         style={styles.loginScreenButton}
-                        onPress={this.loginUser }
+                        onPress={this.loginUser}
                         underlayColor='#fff'>
                         <Text style={styles.submitText}>ورود</Text>
                     </TouchableOpacity>
@@ -134,18 +171,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginRight: 20,
         marginLeft: 20,
-        padding:10,
-        fontFamily:'iran_sans',
+        padding: 10,
+        fontFamily: 'iran_sans',
     },
     loginScreenButton: {
         marginTop: 25,
-        width:120,
-         backgroundColor: '#7f735f',
-         height: 37,
-         alignSelf:'center',
-         borderRadius:4,
-         justifyContent:'center',
-        
+        width: 120,
+        backgroundColor: '#7f735f',
+        height: 37,
+        alignSelf: 'center',
+        borderRadius: 4,
+        justifyContent: 'center',
+
     },
     submitText: {
         color: '#fff',

@@ -121,7 +121,7 @@ export const EnterMobileForRegister={
 
 
   export const LoginByMobile={
-    title: 'ورود به همراه یار',
+    title: 'ورود به هم راه',
     storeKey: 'cUser',
     showReturnedBtn: true,
     accessCode: "rg12",

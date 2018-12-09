@@ -23,7 +23,7 @@ export function callApi(apiPath,urlParams, storeKey, model, filterParams) {
     return Api.get(apiPath, model, filterParams, urlParams)
       .then(data => {
         if (storeKey)
-          dispatch(setStateToStore(storeKey, data));
+          doDispatch(storeKey, data);
         return data;
       })
       .catch((ex) => {
@@ -61,7 +61,7 @@ export function fetchList(apiPath, storeKey, condition, sort,limit,skip, fromCac
     return Api.fetchCollection(apiPath, condition, sort,limit,skip)
       .then(list => {
         if (storeKey)
-          dispatch(setStateToStore(storeKey, list));
+        doDispatch(storeKey, list)
         return list;
       })
       .catch((ex) => {
@@ -76,19 +76,16 @@ export function fetchPagedList(apiPath, storeKey, condition, sort,pageIndex,page
     let skip=pageIndex * pageSize;
     return Api.fetchCollection(apiPath, condition, sort,limit,skip)
       .then(list => {
-        // if (storeKey){
-        //   let l=state[storeKey].concat(list);
-        //   dispatch(setStateToStore(storeKey, l));
-        // }
-         
+        if (storeKey){
+          doDispatch(storeKey, list);
+        }
         return list;
       })
-      .catch((ex) => {
+      .catch((ex)=>{
         throw ex;
       });
   }
 }
-
 export function getCount(apiPath, storeKey, condition, fromCache) {
   return (dispatch, getState) => {
     let state = getState();

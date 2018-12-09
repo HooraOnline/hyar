@@ -5,7 +5,7 @@ import {
 
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { I18nManager, StyleSheet, View, NetInfo, TouchableOpacity, ImageBackground } from 'react-native';
+import { I18nManager, StyleSheet, View, NetInfo, TouchableOpacity, ImageBackground,Linking } from 'react-native';
 import connect from 'react-redux/lib/connect/connect';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../aRedux'
@@ -14,6 +14,7 @@ import { Album } from '../components/Album';
 import { Tile } from '../components/Tile';
 import { Util } from '../lib/util';
 import MasterPage from './MasterPage';
+
 class MainForm extends Component {
     constructor(props) {
         super(props)
@@ -36,13 +37,8 @@ class MainForm extends Component {
             })
     }
     componentDidMount() {
-        try {
-            I18nManager.forceRTL(true);
-            I18nManager.allowRTL(true);
-            I18nManager.isRTL = true;
-        } catch (e) {
-            console.log(e);
-        }
+       
+     
         this.getTileInfo();
     }
 
@@ -101,9 +97,9 @@ class MainForm extends Component {
                 footertabIndex={1}
                 containerStyle={{ backgroundColor: '#f2f4f7', }}
                 footerStyle={{ backgroundColor: '#fff' }}
-                title="همراه یار"
+                title="هم راه"
                 headerItems={[
-                    { text: 'همراه یار', color: '#00ced1', },
+                    { text: 'هم راه', color: '#00ced1', },
                     { icon: 'ios-search-outline', width: 30, color: '#00ced1', onPress: () => { } },
                 ]}
             >
@@ -114,7 +110,7 @@ class MainForm extends Component {
                     opacity={0.9}
                     opacityColor='#f2f4f7'
                     items={[
-                        { image: Api.getFilePath('design') + "banner2.png", onPress: () => { } },
+                        { image: Api.getFilePath('design') + "banner2.png", onPress: () => {Linking.openURL('https://article.tebyan.net/224343/%D8%B2%D9%86%D8%AF%DA%AF%DB%8C-%D8%B3%D8%A7%D9%84%D9%85-%D8%A8%D8%A7-%D8%AA%D8%BA%D8%B0%DB%8C%D9%87-%D8%B3%D8%A7%D9%84%D9%85');} },
                         // { image: Api.fileContainer + "monitor/download/asreertebat_01-03-2018-1514932363.jpg" },
                         // {  image: Api.fileContainer + "monitor/download/710064_267.jpg", },
 

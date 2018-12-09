@@ -122,7 +122,7 @@ class Comment extends Component {
                         text: 'نظر شما دریافت شد.',
                         duration: 3000,
                         type: 'success',
-                        position: "top"
+                        position: "bottom"
                       })
                       this.setState({ commentText: '', showCommentTextBox: false });
                       this.props.model.commentNumber = this.props.model.commentNumber ? this.props.model.commentNumber + 1 : 1;

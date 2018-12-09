@@ -4072,6 +4072,12 @@ react-native-scrollable-mixin@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npmjs.org/react-native-scrollable-mixin/-/react-native-scrollable-mixin-1.0.1.tgz#34a32167b64248594154fd0d6a8b03f22740548e"
 
+react-native-speedometer-chart@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/react-native-speedometer-chart/-/react-native-speedometer-chart-0.6.4.tgz#006a627ecb496a322771e999429e48375bac2657"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-svg@6.2.2:
   version "6.2.2"
   resolved "http://registry.npmjs.org/react-native-svg/-/react-native-svg-6.2.2.tgz#5803cddce374a542b4468c38a2474fca32080685"

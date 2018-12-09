@@ -7,7 +7,7 @@ import {
 } from 'native-base';
 
 import ExpoImageManager from '../../components/ExpoImageManager';
-import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, Linking } from 'react-native';
 import connect from 'react-redux/lib/connect/connect';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../../aRedux';
@@ -28,22 +28,22 @@ class ContactColleague extends Component {
     render() {
         return (
             <MasterPage
-            showMenu={true}
-            footertabIndex={2}
-            showReturnBtn={true}
-            headerTransparent={false}
-            headerColor='#35536d'
-            footerStyle={{ backgroundColor: '#35536d' }}
-            footerIconColor='#fff'
-            title="تماس"
-            headerColor='#35536d'
-            headerIconColor="#fff"
-            headerItems={[
-                { text: 'تماس', color: '#fff', },
-               
-            ]}
+                showMenu={true}
+                footertabIndex={2}
+                showReturnBtn={true}
+                headerTransparent={false}
+                headerColor='#35536d'
+                footerStyle={{ backgroundColor: '#35536d' }}
+                footerIconColor='#fff'
+                title="تماس"
+                headerColor='#35536d'
+                headerIconColor="#fff"
+                headerItems={[
+                    { text: 'تماس', color: '#fff', },
+
+                ]}
             >
-                <View style={styles.container}>
+                <View>
 
                     <Image source={{ uri: Api.getFilePath('profile') + this.props.entity.profileImage }} style={styles.avatar} />
 
@@ -51,48 +51,43 @@ class ContactColleague extends Component {
                         <Text style={styles.name1}>{this.props.entity.firstName + ' ' + this.props.entity.lastName}</Text>
                         <Text style={styles.info}>{this.props.entity.postName}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 40, justifyContent: 'space-between', alignItems: 'center',marginTop:16 }} >
+                    <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 40, justifyContent: 'space-between', alignItems: 'center', marginTop: 16 }} >
                         <View>
-                            <Icon name='ios-chatbubbles' style={{ fontSize: 40, color: '#35536d' }}  onPress={
-                                ()=>dataAdapter.get('Chats/initChatRoom', null, null, {username1:this.props.cUser.id,username2:this.props.entity.id}).then( (res) => {console.log(res); Actions.Chat({roomId:res.room.id,resiver:this.props.entity}) }  )
-                         }/>
-                            <Text style={{ color: '#35536d', fontSize: 14, fontFamily: 'iran_sans_bold' }}>گفتگو</Text>
+                            <Icon name='ios-chatbubbles' style={{ fontSize: 40, color: '#35536d' }} onPress={
+                                () => dataAdapter.get('Chats/initChatRoom', null, null, { username1: this.props.cUser.id, username2: this.props.entity.id }).then((res) => { console.log(res); Actions.Chat({ roomId: res.room.id, resiver: this.props.entity }) })
+                            } />
+                            <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>گفتگو</Text>
                         </View>
                         <View>
-                            <Icon name='ios-call' style={{ fontSize: 40, color: '#35536d' }} />
-                            <Text style={{ color: '#35536d', fontSize: 14, fontFamily: 'iran_sans_bold' }}>تماس</Text>
+                            <Icon name='ios-call' style={{ fontSize: 40, color: '#35536d' }} onPress={() => { Linking.openURL(`tel:${this.props.cUser.mobile}`); }} />
+                            <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>تماس</Text>
                         </View>
                         <View>
-                            <Icon name='ios-mail' style={{ fontSize: 40, color: '#35536d' }} />
-                            <Text style={{ color: '#35536d', fontSize: 14, fontFamily: 'iran_sans_bold' }}>ایمیل</Text>
+                            <Icon name='ios-mail' style={{ fontSize: 40, color: '#35536d' }} onPress={() => { Linking.openURL(`mailto:${this.props.cUser.email}`); }} />
+                            <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>ایمیل</Text>
                         </View>
-
-
+                        <View>
+                            <Icon name='md-chatbubbles' style={{ fontSize: 40, color: '#35536d' }} onPress={() => { Linking.openURL(`sms:${this.props.cUser.mobile}`); }} />
+                            <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>پیامک</Text>
+                        </View>
                     </View>
+                    <View style={{ flex: 1 }}></View>
                     <View style={styles.body}>
                         <View style={styles.viewStyle} >
                             <Text style={styles.lableStyle}> کد پرسنلی</Text>
                             <Text style={{ flex: 1, color: '#fff' }}> {this.props.entity.personalCode}</Text>
                         </View>
-                        <View
-                            style={styles.horizentalLine}
-                        />
+
                         <View style={styles.viewStyle} >
                             <Text style={styles.lableStyle}> موبایل </Text>
                             <Text style={{ flex: 1, color: '#fff' }}> {this.props.entity.mobile}</Text>
                         </View>
-                        <View
-                            style={styles.horizentalLine}
-                        />
+
 
                         <View style={styles.viewStyle} >
                             <Text style={styles.lableStyle}> تلفن </Text>
                             <Text style={{ flex: 1, color: '#fff' }}> {this.props.entity.phoneNumber}</Text>
                         </View>
-
-                        <View
-                            style={styles.horizentalLine}
-                        />
 
                         <View style={styles.viewStyle} >
                             <Text style={styles.lableStyle}> ایمیل </Text>
@@ -127,9 +122,10 @@ const styles = StyleSheet.create({
     body: {
         marginTop: 20,
         margin: 0,
-        paddingVertical: 10,
-        padding: 5,
-        backgroundColor: '#35536d'
+        paddingBottom: 10,
+        paddingHorizontal: 8,
+        backgroundColor: '#35536d',
+
     },
     bodyContent: {
         flex: 1,
@@ -137,9 +133,9 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     name1: {
-        fontSize: 20,
+        fontSize: 17,
         color: "#696969",
-        fontWeight: "600"
+        fontFamily: 'iran_sans_bold'
     },
     info: {
         fontSize: 16,
@@ -166,10 +162,9 @@ const styles = StyleSheet.create({
     },
     lableStyle: {
         flex: 1,
-        fontWeight: 'bold',
         textAlign: 'left',
         marginBottom: 5,
-        fontFamily: 'iran_sans',
+        fontFamily: 'iran_sans_bold',
         fontSize: 12,
         color: '#fff'
         //textDecorationLine: 'underline',
@@ -177,13 +172,12 @@ const styles = StyleSheet.create({
     viewStyle: {
         flexDirection: 'row',
         alignItems: 'flex-end',
-        height: 40,
+        paddingVertical: 15,
+        borderBottomColor: '#EFEFEF',
+        borderBottomWidth: 1
+
     },
-    horizentalLine: {
-        borderBottomColor: '#eee',
-        borderBottomWidth: 0.3,
-        marginHorizontal: 10
-    }
+
 });
 
 

@@ -11,6 +11,30 @@ class PasswordRecovery extends React.Component {
     sendPassword=()=>{
        // this.props.callApi('sendEmail',)
     }
+    mailNewPass=(newPass)=>{
+        Actions.Login();
+        Toast.show({
+          text: 'رمز یکبار مصرف به ایمیل شما ارسال شد، اکیدا توصیه می شود بلافاصله بعد از ورود به سیستم رمز خود را تغییر دهید.',
+          duration: 10000,
+          type: 'success',
+          position: "top"
+        })
+    }
+    ChangePass = () => {
+        let newPass=Math.floor((Math.random() * 1000000)).toString()
+        let entity = {id:this.props.cUser.id,password: newPass,}
+        this.props.updateEntity('members', entity).then((res) => {
+           this.sendEmail(newPass);
+        }).catch(e => {
+         console.log(e)
+          Toast.show({
+            text: 'بروز اشکال لطفا دوباره تلاش کنید.',
+            duration: 3000,
+            type: 'danger',
+            position: "top"
+          })
+        });
+      }
     render() {
         return (
             <MasterPage
@@ -23,10 +47,10 @@ class PasswordRecovery extends React.Component {
                 headerTransparent={false}
                 showFooter={false}
                 headerColor='#fff'
-                title="همراه یار"
+                title="هم راه"
                 headerIconColor="#00ced1"
                 headerItems={[
-                    { text: 'همراه یار', color: '#00ced1', },
+                    { text: 'هم راه', color: '#00ced1', },
                   
                 ]}
             >

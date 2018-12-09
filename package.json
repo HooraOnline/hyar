@@ -20,6 +20,7 @@
     "react-native-image-progress": "^1.1.1",
     "react-native-progress": "^3.5.0",
     "react-native-router-flux": "^4.0.5",
+    "react-native-speedometer-chart": "^0.6.4",
     "react-native-swiper": "^1.5.13",
     "react-native-video": "^3.2.1",
     "react-redux": "^5.0.7",

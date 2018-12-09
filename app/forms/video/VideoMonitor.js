@@ -45,11 +45,7 @@ class VideoMonitor extends Component {
     return Util.device.height / 2.7 + 80 + monitorHeight;
     //return 51;
   }
-  componentDidMount() {
-    //Expo.ScreenOrientation.allow(this.state.screen);
-    //Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.ALL);
-    //Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE);
-  }
+  
   render() {
     return (
       <MasterPage
@@ -108,7 +104,7 @@ class VideoMonitor extends Component {
             <VideoViewer entity={this.state.monitorEntity} />
           </View>
           }
-          renderListHeader2={(entity) => <View>
+          renderListHeader23454534={(entity) => <View>
             {
               this.state.monitorEntity &&
               <View style={{}}>

@@ -4,19 +4,13 @@ import {
     Button, Text,
     Icon,
     Row, Col,
-    Grid
 } from 'native-base';
-import { Image, StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View,} from 'react-native';
 import connect from 'react-redux/lib/connect/connect';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../aRedux';
-import Api from '../lib/api';
 import Comment from '../components/Form/Comment';
-import { Util } from '../lib/util';
 import MasterPage from './MasterPage';
-import PersianDate from '../components/tools/PersianDate';
-import Like from '../components/Form/Like';
-import NewsViewer from './news/NewsViewer';
 class EntityComments extends Component {
     constructor(props) {
         super(props)
@@ -34,7 +28,7 @@ class EntityComments extends Component {
         if (!this.props.entity)
             return;
         this.props.entity.seen = this.props.entity.seen ? this.props.entity.seen + 1 : 1;
-        this.props.updateEntity('news', this.props.entity);
+        this.props.updateEntity(this.props.apiPath, this.props.entity);
     }
     componentDidMount() {
         this.addToseen();
@@ -54,6 +48,9 @@ class EntityComments extends Component {
                 isList={true}
                 showReturnBtn={true}
                 headerTransparent={false}
+                headerColor={this.props.headerColor || '#fff'}
+                title="نظرات"
+                containerStyle={{backgroundColor:'#000'}}
                 headerItems={[
                     { text: 'متن خبر', color: '#00ced1', },
 
@@ -65,14 +62,17 @@ class EntityComments extends Component {
             >
 
                 <Comment backgroundColor='#fefefe' style={{ marginTop: 10, }} contentStyle={{}}
-                    modelName='news'
+                    modelName={this.props.modelName}
                     showCommentTextBox={this.state.showCommentTextBox}
                     model={this.props.entity}
                     entity2={this.props.entity}
+                    monitorHight={this.props.monitorHight || 350}
                     pageSize={5}
                     renderEntity={(selectedComment) => <View >
                         <View style={{ flex: 1, borderColor: '#e56c45', borderBottomWidth: 5, marginBottom: 10 }}>
-                            <NewsViewer entity={this.props.entity} />
+                            {
+                                this.props.entityMonitor
+                            }
                         </View>
                         <Row style={{ marginHorizontal: 10, justifyContent: 'center', alignItems: 'center' ,backgroundColor:'#efefef',height:40 }}>
                             <Col style={{ width: 30, alignItems: 'center', }} onPress={() => { this.setState({ showCommentTextBox: true }) }}>

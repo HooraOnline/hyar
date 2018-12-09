@@ -18,7 +18,7 @@ class uiHelper {
   logout = () => {
     Actions.Login();
     Util.clearTokenFromLocalStorage();
-    BackHandler.alow = false;
+    //BackHandler.alow = false;
   }
   openSearchForm = (fetchListApi, itemHeight, renderItem, textSearchFields, title) => {
     Actions.SearchForm({

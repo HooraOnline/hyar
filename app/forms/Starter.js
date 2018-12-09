@@ -15,7 +15,7 @@ I18nManager.forceRTL(true);
 class Starter extends Component {
     constructor(props) {
         super(props)
-        I18nManager.forceRTL(true);
+        //I18nManager.forceRTL(true);
         this.state = { connected: -1, fontLoaded: false }
     }
     componentDidMount() {
@@ -43,9 +43,9 @@ class Starter extends Component {
     handelConectionChange = (isConnected) => {
         this.setState({ connected: isConnected });
         if (isConnected) {
-            if (Actions._currentParams && Actions._currentParams.title != "Starter")
-                Actions.Starter();
-            else
+            // if (Actions._currentParams && Actions._currentParams.title != "Starter")
+            //     Actions.Starter();
+            // else
                 this.startApplication();
         } else {
             Actions.CheckInternet();

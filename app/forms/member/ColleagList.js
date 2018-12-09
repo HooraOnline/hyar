@@ -114,8 +114,8 @@ class ColleagList extends Component {
                     renderItem={(item) => <View>
                         <View style={{ padding: 10,paddingHorizontal:20, flex: 1, flexDirection: 'row', borderBottomWidth: 0 }}>
                             <Left>
-                                <Text style={publicStyle.boldText}>{item.firstName + ' ' + item.lastName}</Text>
-                                <Text note>{item.postName}</Text>
+                                <Text style={{fontFamily: 'iran_sans_bold',fontSize:13}}>{item.firstName + ' ' + item.lastName}</Text>
+                                <Text style={{fontFamily: 'iran_sans',fontSize:14}} note>{item.postName}</Text>
                             </Left>
                             <View style={{ width: 70 }}>
                                 <Thumbnail source={{ uri: Api.fileContainer + "profile/download/" + item.profileImage }} />

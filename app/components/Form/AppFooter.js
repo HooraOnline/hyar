@@ -20,14 +20,14 @@ export default class AppFooter extends Component {
             <FooterTab style={[{marginTop:7, backgroundColor: '#efefef',marginHorizontal:5,borderRadius:10,borderBottomLeftRadius:30,borderBottomRightRadius:30 },this.props.style]}>
                 <Row style={{  }}>
                     <Col style={{ alignItems: 'center',marginHorizontal:2, borderTopColor:'#00ced1',borderTopWidth: this.props.selected==1?2:0}}>
-                        <Button badge vertical style={{ justifyContent: 'flex-end' }} onPress={() => {  Actions.MainForm() }}>
+                        <Button badge vertical style={{ justifyContent: 'flex-end' }} onPress={() => { if(Actions.currentParams.title == "MainForm") return;  Actions.popTo('MainForm') }}>
                             <Icon name="ios-easel-outline" size={32}style={{ fontSize:25,color: this.props.selected==1?'#00ced1':this.props.iconColor ||'#000' }}  />
                             <Text style={{ fontFamily:'iran_sans', fontSize: 12, color: this.props.selected==1?'#00ced1':this.props.iconColor ||'#000' }}>ویترین</Text>
                         </Button>
                     </Col>
                     <Col style={{ alignItems: 'center',marginHorizontal:2, borderTopColor:'#00ced1',borderTopWidth: this.props.selected==2?2:0}} >
                         <Button badge vertical style={{ justifyContent: 'flex-end' }} onPress={() => {
-                            Actions.ColleagList()
+                              if(Actions.currentParams.title == "ColleagList") return;Actions.pop(); Actions.ColleagList()
                             }}>
                             <Icon name='ios-people-outline' style={{ fontSize:25,color: this.props.selected==2?'#00ced1':this.props.iconColor ||'#000' }} />
                             <Text style={{ fontFamily:'iran_sans', fontSize: 12, color: this.props.selected==2?'#00ced1':this.props.iconColor ||'#000' }}>همکاران</Text>
