@@ -15,6 +15,7 @@ import Api from '../../lib/api';
 import { Album } from '../../components/Album';
 import ListLoader from '../../components/Form/ListLoader';
 import NewsViewer from './NewsViewer';
+import Like from '../../components/Form/Like';
 
 
 class NewsList extends Component {
@@ -38,7 +39,7 @@ class NewsList extends Component {
             for (let i = 0; i < nList.length; ++i)
                 topNews.push({
                     image: Api.getFilePath('news') + nList[i].image,
-                    onPress: () => Actions.EntityComments({ entity: nList[i] ,apiPath:'news',modelName:'news',entityMonitor:<NewsViewer entity={nList[i]} />}),
+                    onPress: () => Actions.EntityComments({ entity: nList[i] ,apiPath:'news',modelName:'news',headerColor:'#ffb623', entityMonitor:<NewsViewer entity={nList[i]} />}),
                     content: <Grid style={{ flex: 1 }} >
                         <Row style={{}} >
                             <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', flex: 1, margin: 15 }}>
@@ -65,14 +66,16 @@ class NewsList extends Component {
                 isList={true}
                 showReturnBtn={false}
                 headerTransparent={true}
+                headerColor='#ffb623'
+               
                 //scrollY={this.state.scrollY}
                 footerStyle={{ backgroundColor: '#ffb623' }}
                 title="اخبار"
-                headerIconColor="#00ced1"
+                headerIconColor="#2a8892"
                 headerItems={[
-                    { text: 'اخبار', color: '#00ced1', },
+                    { text: 'اخبار', color: '#2a8892', },
                     {
-                        icon: 'ios-arrow-round-back-outline', width: 30, color: '#00ced1',
+                        icon: 'ios-arrow-round-back-outline', width: 30, color: '#2a8892',
                         onPress: () => { Actions.pop() }
                     },
                 ]}
@@ -84,8 +87,8 @@ class NewsList extends Component {
                     apiPath='News'
                     title="اخبار"
                     monitorHight={this.state.monitorHight}
-                    headerIconColor="#00ced1"
-                    headerColor='#fff'
+                    headerColor='#ffb623'
+                    headerIconColor="#2a8892"
                     onsort={() => { }}
                     onScroll={(scroolY, event) => {
                         // console.log(event.velocity.y)
@@ -109,8 +112,7 @@ class NewsList extends Component {
                                 <Text style={{ paddingHorizontal: 10, fontSize: 12, color: '#555', fontFamily: 'iran_sans' }}>{entity.desc.substring(0, 110)}</Text>
                                 <View style={{ flexDirection: 'row', width: '90%', marginTop: 10 }}>
                                     <Row style={{}} >
-                                        <Icon name="md-thumbs-up" style={{ fontSize: 16, color: '#85929E', flex: 1 }} ></Icon>
-                                        <Text style={{ fontSize: 12, fontFamily: 'iran_sans', color: '#85929E', paddingHorizontal: 5 }}>{entity.like || 0}</Text>
+                                        <Like apiPath="news" storeKey="currentEntity2" entity={entity} /> 
                                     </Row>
                                     <Row style={{}}>
                                         <Icon name="md-eye" style={{ fontSize: 16, color: '#85929E', flex: 1 }} ></Icon>

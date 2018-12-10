@@ -67,6 +67,7 @@ class ListLoader extends Component {
             });
     }
     filterList = (filter) => {
+       debugger
         this.filter=filter;
         this.state.dataArray = [];
         this.state.pageIndex = 0;

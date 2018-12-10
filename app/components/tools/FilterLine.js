@@ -23,11 +23,11 @@ export default class FilterLine extends Component {
                                     this.props.items.map((f) => f.selected = false)
                                     i.selected = true;
                                     let filter = {}
-                                    filter.index = index;
+                                    //filter.index = index;
                                     filter[i.field] = i.value;
                                     if (this.props.onfilter)
-                                        this.props.onfilter(i, this.props.list, this);
-                                    this.props.filterList(filter);
+                                        this.props.onfilter(i,index, this.props.list, this);
+                                    this.props.filterList(filter,i,index, this.props.list, this);
                                 }}>
                                 {
                                     i.text &&
@@ -37,6 +37,9 @@ export default class FilterLine extends Component {
                         })
                     }
                 </Row>
+                {
+                    this.props.children
+                }
             </ScrollView>
 
 

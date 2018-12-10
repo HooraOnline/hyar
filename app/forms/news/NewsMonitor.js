@@ -16,6 +16,7 @@ import Api from '../../lib/api';
 import NewsViewer from './NewsViewer';
 import { Util } from '../../lib/util';
 import Line from '../../components/tools/Line';
+import Like from '../../components/Form/Like';
 class NewsMonitor extends Component {
 
   constructor(props) {
@@ -58,11 +59,11 @@ class NewsMonitor extends Component {
         //scrollY={this.state.scrollY}
         footerStyle={{ backgroundColor: '#ffb623' }}
         title="خبر"
-        headerIconColor="#00ced1"
+        headerIconColor="#2a8892"
         headerItems={[
-          { text: 'خبر', color: '#00ced1', },
+          { text: 'خبر', color: '#2a8892', },
           {
-            icon: 'ios-arrow-round-back-outline', width: 30, color: '#00ced1',
+            icon: 'ios-arrow-round-back-outline', width: 30, color: '#2a8892',
             onPress: () => {  Actions.pop() }
           },
         ]}
@@ -74,9 +75,9 @@ class NewsMonitor extends Component {
           apiPath='News'
           title="اخبار"
           animateHeaderHeight={50}
-          monitorHight={this.state.monitorHight}
-          headerIconColor="#00ced1"
-          headerColor='#fff'
+          monitorHight={41}
+          headerIconColor="#2a8892"
+          headerColor='#ffb623'
           onsort={() => { this.state.monitorEntity = null }}
           onScroll={(scroolY, event) => {
             // console.log(event.velocity.y)
@@ -111,8 +112,7 @@ class NewsMonitor extends Component {
                 <Text style={{ paddingHorizontal: 10, fontSize: 12, color: '#555', fontFamily: 'iran_sans' }}>{entity.desc.substring(0, 110)}</Text>
                 <View style={{ flexDirection: 'row', width: '90%', marginTop: 10 }}>
                   <Row style={{}} >
-                    <Icon name="md-thumbs-up" style={{ fontSize: 16, color: '#85929E', flex: 1 }} ></Icon>
-                    <Text style={{ fontSize: 12, fontFamily: 'iran_sans', color: '#85929E', paddingHorizontal: 5 }}>{entity.like || 0}</Text>
+                  <Like apiPath="news" storeKey="currentEntity2" entity={entity} /> 
                   </Row>
                   <Row style={{}}>
                     <Icon name="md-eye" style={{ fontSize: 16, color: '#85929E', flex: 1 }} ></Icon>

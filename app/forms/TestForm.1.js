@@ -44,7 +44,7 @@ export default class TestForm extends Component {
                 //scrollY={this.state.scrollY}
                 footerStyle={{ backgroundColor: '#ffb623' }}
                 title="اخبار"
-                headerIconColor="#00ced1"
+                headerIconColor="#2a8892"
                 headerItems={[
                     { text: 'اخبار', color: '#00ced1', },
                     {
@@ -60,7 +60,7 @@ export default class TestForm extends Component {
                     sortbarItems={[{ text: 'تازه ترین اخبار', sort: 'id desc', selected: true }, { text: 'پربازدیدترین اخبار', sort: 'seen desc' }]}
                     apiPath='News'
                     title="اخبار"
-                    headerIconColor="#00ced1"
+                    headerIconColor="#2a8892"
                     onsort={() => { }}
                     onScroll={(scroolY, event) => {
                         // console.log(event.velocity.y)

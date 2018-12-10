@@ -94,7 +94,7 @@ class VideoViewer extends Component {
                             <Col style={{}} >
                                 <Like apiPath="videos" color='#fff' storeKey="currentEntity2" entity={this.props.entity} />
                             </Col>
-                            <Col style={{}} onPress={() => { Actions.EntityComments({ entity: this.props.entity, apiPath: 'videos', modelName: 'videos', headerColor: '#000', entityMonitor: <VideoViewer entity={this.props.entity} /> }) }}>
+                            <Col style={{}} onPress={() => { Actions.EntityComments({ entity: this.props.entity, apiPath: 'videos', modelName: 'videos',headerColor:'#0', headerColor: '#000', entityMonitor:null }) }}>
                                 <Text style={{ paddingHorizontal: 10, fontSize: 12, color: '#fff', fontFamily: 'iran_sans' }}><Icon name='md-chatbubbles' style={{ color: '#fff', fontSize: 18 }} /> {this.props.entity.commentNumber || 0}</Text>
                             </Col>
                             <Col style={{}} >

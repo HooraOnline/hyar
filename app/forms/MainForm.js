@@ -80,7 +80,7 @@ class MainForm extends Component {
     }
     render() {
         if (!this.props.cUser.id)
-            return (<View style={{ backgroundColor: '#000', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            return (<View style={{ backgroundColor: '#fff', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity activeOpacity={0.8} key={Math.random()} onPress={() => { if (this.props.cUser.id) Actions.MainForm(); }} style={[{ flex: 1, height: null, width: null, margin: this.props.margin || 0, }]}>
                     <ImageBackground resizeMode="cover" source={require("../assets/splash.png")} style={{ flex: 1, height: 400, width: 400, borderWidth: 0, borderColor: '#000', borderRadius: 0 }}>
 
@@ -99,8 +99,8 @@ class MainForm extends Component {
                 footerStyle={{ backgroundColor: '#fff' }}
                 title="هم راه"
                 headerItems={[
-                    { text: 'هم راه', color: '#00ced1', },
-                    { icon: 'ios-search-outline', width: 30, color: '#00ced1', onPress: () => { } },
+                    { text: 'هم راه', color: '#2a8892', },
+                    { icon: 'ios-search-outline', width: 30, color: '#2a8892', onPress: () => { } },
                 ]}
             >
 

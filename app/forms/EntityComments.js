@@ -21,7 +21,7 @@ class EntityComments extends Component {
             albumHeight: 200,
             isList: true,
             showComments: this.props.showComments || false,
-            showCommentTextBox: false
+           
         }
     }
     addToseen = () => {
@@ -49,10 +49,10 @@ class EntityComments extends Component {
                 showReturnBtn={true}
                 headerTransparent={false}
                 headerColor={this.props.headerColor || '#fff'}
-                title="نظرات"
-                containerStyle={{backgroundColor:'#000'}}
+                title="نظرات کاربران"
+                containerStyle={{backgroundColor:this.props.containerStyle}}
                 headerItems={[
-                    { text: 'متن خبر', color: '#00ced1', },
+                    { text: 'متن خبر',  },
 
                 ]}
                 onScroll={(e) => {
@@ -61,9 +61,8 @@ class EntityComments extends Component {
                 }}
             >
 
-                <Comment backgroundColor='#fefefe' style={{ marginTop: 10, }} contentStyle={{}}
+                <Comment backgroundColor='#fefefe' style={{ marginTop: 0, }} contentStyle={{}}
                     modelName={this.props.modelName}
-                    showCommentTextBox={this.state.showCommentTextBox}
                     model={this.props.entity}
                     entity2={this.props.entity}
                     monitorHight={this.props.monitorHight || 350}
@@ -74,14 +73,11 @@ class EntityComments extends Component {
                                 this.props.entityMonitor
                             }
                         </View>
-                        <Row style={{ marginHorizontal: 10, justifyContent: 'center', alignItems: 'center' ,backgroundColor:'#efefef',height:40 }}>
-                            <Col style={{ width: 30, alignItems: 'center', }} onPress={() => { this.setState({ showCommentTextBox: true }) }}>
-                                <Icon name='ios-add-circle' style={{ fontSize: 32, color: '#000' }} />
-                            </Col>
-                            <Col style={{ alignItems: 'center',justifyContent:'center',alignItems:'center'}} onPress={() => { this.setState({ showCommentTextBox: true }) }}>
+                        {/* <Row style={{ marginHorizontal: 10, justifyContent: 'center', alignItems: 'center' ,backgroundColor:'#efefef',height:40 }}>
+                            <Col style={{ alignItems: 'center',justifyContent:'center',alignItems:'center'}} >
                                 <Text>نظرات کاربران</Text>
                             </Col>
-                        </Row>
+                        </Row> */}
                     </View>
                     }
                 />

@@ -72,8 +72,9 @@ console.log(this.state.rePassword)
         containerStyle={{ backgroundColor: '#f2f4f3' }}
         backgroundColor={{ backgroundColor: '#f2f4f3' }}
         footerIconColor='#000'
+        title="تغییر رمز"
         headerItems={[
-          { text: 'تغییر رمز عبور', color: '#00ced1', },
+          { text: 'تغییر رمز عبور', },
 
         ]}
       >

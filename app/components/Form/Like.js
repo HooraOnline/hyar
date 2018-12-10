@@ -47,8 +47,8 @@ class Like extends Component {
   render() {
 
     return (
-      <Col style={{}} onPress={() => { this.like() }}>
-        <Text style={{ paddingHorizontal: 10, fontSize: 12, color:  this.state.userLike.status ? this.props.likeColor || 'red' : this.props.color || '#000', fontFamily: 'iran_sans' }}><Icon name='md-thumbs-up' style={{ color: this.state.userLike.status ? this.props.likeColor || 'red' : this.props.color || '#000', fontSize: 18 }} /> {this.props.entity.like || 0}</Text>
+      <Col style={this.props.style} onPress={() => { this.like() }}>
+        <Text style={{ paddingHorizontal: 10, fontSize: 12, color:  this.state.userLike.status ? this.props.likeColor || '#faaa22' : this.props.color || '#85929E', fontFamily: 'iran_sans' }}><Icon name= {this.props.icon ||'md-thumbs-up'} style={{ color: this.state.userLike.status ? this.props.likeColor || '#faaa22' : this.props.color || '#85929E', fontSize:this.props.size || 18 }} /> {this.props.entity.like || 0}</Text>
       </Col>
 
     );

@@ -39,8 +39,8 @@ class MedicalTests extends Component {
     loadData = () => {
 
     }
-    filterList = (filter) => {
-        this.setState({ selectedInfo: this.state.userHealthInfo[filter.index] });
+    filterList = (filter, i, index, list, filterLine) => {
+        this.setState({ selectedInfo: this.state.userHealthInfo[index] });
     }
     buildDataSources = (userHealthInfo) => {
         for (let i = 0; i < userHealthInfo.length; ++i) {
@@ -92,11 +92,11 @@ class MedicalTests extends Component {
                 footerStyle={{ backgroundColor: '#0c6366' }}
                 footerIconColor='#fff'
                 title="سلامت"
-                headerIconColor="#00ced1"
+                headerIconColor="#2a8892"
                 headerItems={[
-                    { text: 'آزمایش پزشکی', color: '#00ced1', },
+                    { text: 'آزمایش پزشکی', },
                     {
-                        icon: 'ios-arrow-round-back-outline', width: 30, color: '#00ced1',
+                        icon: 'ios-arrow-round-back-outline', width: 30,
                         onPress: () => { Actions.pop() }
                     },
                 ]}
@@ -148,91 +148,92 @@ class MedicalTests extends Component {
                         console.log(this.state.selectedInfo.sgot)
 
                         return <View style={{ flex: 1, }}>
+                            
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>آنزیم کبدی (SGOT)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.sgot}
-                                        ranges={[{ range: [0, 5], color: '#E6787D' }, { range: [5, 40], color: '#9EE898' }, { range: [40, 100], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.sgot}
+                                        ranges={[{ range: [0, 5], color: '#E6787D' }, { range: [5, 40], color: '#58D68D' }, { range: [40, 100], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>آنزیم کبدی (SGPT)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.sgpt}
-                                        ranges={[{ range: [0, 5], color: '#E6787D' }, { range: [5, 40], color: '#9EE898' }, { range: [40, 100], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.sgpt}
+                                        ranges={[{ range: [0, 5], color: '#E6787D' }, { range: [5, 40], color: '#58D68D' }, { range: [40, 100], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>اسید اوریک (URICACID)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar style={{ marginTop: 10 }} height={15} width={330} pin={this.state.selectedInfo.uricacid}
-                                        ranges={[{ range: [0, 3.5], color: '#E6787D' }, { range: [3.5, 7.5], color: '#9EE898' }, { range: [7.5, 10], color: '#E6787D' },]}
+                                    <ColorBar style={{ marginTop: 10 }} height={15} pin={this.state.selectedInfo.uricacid}
+                                        ranges={[{ range: [0, 3.5], color: '#E6787D' }, { range: [3.5, 7.5], color: '#58D68D' }, { range: [7.5, 10], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>هموگلوببن (hgb)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar style={{ marginTop: 10 }} width={330} height={15} pin={this.state.selectedInfo.hgb}
-                                        ranges={[{ range: [0, 13.1], color: '#E6787D' }, { range: [13.1, 17.2], color: '#9EE898' }, { range: [17.2, 20], color: '#E6787D' },]}
+                                    <ColorBar style={{ marginTop: 10 }} height={15} pin={this.state.selectedInfo.hgb}
+                                        ranges={[{ range: [0, 13.1], color: '#E6787D' }, { range: [13.1, 17.2], color: '#58D68D' }, { range: [17.2, 20], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>کلسترول خوب (HDL)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.hdl}
-                                        ranges={[{ range: [0, 30], color: '#E6787D' }, { range: [30, 80], color: '#9EE898' }, { range: [80, 100], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.hdl}
+                                        ranges={[{ range: [0, 30], color: '#E6787D' }, { range: [30, 80], color: '#58D68D' }, { range: [80, 100], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>کلسترول بد (LDL)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.ldl}
-                                        ranges={[{ range: [0, 130], color: '#9EE898' }, { range: [130, 160], color: '#EB984E' }, { range: [160, 200], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.ldl}
+                                        ranges={[{ range: [0, 130], color: '#58D68D' }, { range: [130, 160], color: '#F8C471' }, { range: [160, 200], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>شمارش گلبولهای قرمز (RBC)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.rbc}
-                                        ranges={[{ range: [0, 1.6], color: '#E6787D' }, { range: [1.6, 7.4], color: '#9EE898' }, { range: [7.4, 9], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.rbc}
+                                        ranges={[{ range: [0, 1.6], color: '#E6787D' }, { range: [1.6, 7.4], color: '#58D68D' }, { range: [7.4, 9], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>شمارش گلبورهای سفید (WBC)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.wbc}
-                                        ranges={[{ range: [0, 5], color: '#E6787D' }, { range: [5, 10], color: '#9EE898' }, { range: [10, 15], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.wbc}
+                                        ranges={[{ range: [0, 5], color: '#E6787D' }, { range: [5, 10], color: '#58D68D' }, { range: [10, 15], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>نیتروژن اوره (BUN)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.bun}
-                                        ranges={[{ range: [0, 20], color: '#E6787D' }, { range: [20, 97], color: '#9EE898' }, { range: [97, 110], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.bun}
+                                        ranges={[{ range: [0, 20], color: '#E6787D' }, { range: [20, 97], color: '#58D68D' }, { range: [97, 110], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>قند خون ناشتا (SGOT)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.sgot}
-                                        ranges={[{ range: [0, 20], color: '#E6787D' }, { range: [20, 97], color: '#9EE898' }, { range: [97, 110], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.sgot}
+                                        ranges={[{ range: [0, 20], color: '#E6787D' }, { range: [20, 97], color: '#58D68D' }, { range: [97, 110], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>تری گلیسرین</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <ColorBar width={330} height={15} pin={this.state.selectedInfo.tg}
-                                        ranges={[{ range: [0, 150], color: '#9EE898' }, { range: [150, 200], color: '#EB984E' }, { range: [200, 500], color: '#E6787D' },]}
+                                    <ColorBar height={15} pin={this.state.selectedInfo.tg}
+                                        ranges={[{ range: [0, 150], color: '#58D68D' }, { range: [150, 200], color: '#EB984E' }, { range: [200, 500], color: '#E6787D' },]}
                                     />
                                 </View>
                             </View>
@@ -241,11 +242,19 @@ class MedicalTests extends Component {
                     }}
 
                     renderFixedBar={(animateForm) => {
-                        return   <FilterLine filterList={this.filterList} textStyle={{ color: '#fff' }} style={{ height: 50, flex: 1 }}
-                                items={this.state.filterItems}
-                            />
-                          
-                      
+                        return <FilterLine filterList={(filter, i, index, list, filterLine) => this.filterList(filter, i, index, list, filterLine)} textStyle={{ color: '#fff',paddingHorizontal: 12,padding:2.4 }} style={{ backgroundColor: '#85929E', height: 30, flex: 1 }}
+                            items={this.state.filterItems}
+                        >
+                        <Row style={{ height: 20, backgroundColor: '#fff', }}>
+                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#117A65', margin: 5, width: 10, height: 10 }}></View><Text style={{ color: '#58D68D', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>سلامت</Text></Col>
+                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#F1C40F', margin: 5, width: 10, height: 10 }}></View><Text style={{ color: '#F4D03F', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>نیاز به مراقبت بیشتر</Text></Col>
+                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#E74C3C', margin: 5, width: 10, height: 10 }}></View><Text style={{ color: '#E6787D', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>هشدار</Text></Col>
+                            </Row>
+                        </FilterLine>
+
+
+
+
                     }
 
                     }
@@ -260,41 +269,10 @@ class MedicalTests extends Component {
 const styles = StyleSheet.create({
     tile: {
         height: 110,
-        backgroundColor: '#ececec',
-        margin: 5, padding: 5
+        backgroundColor: '#efefef',
+        margin: 3, padding: 15
     },
-    container: {
-        width: 200,
-        height: 200,
-        borderWidth: 20,
-        borderRadius: 100,
-        borderColor: 'grey',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    progressLayer: {
-        width: 200,
-        height: 200,
-        borderWidth: 20,
-        borderRadius: 100,
-        position: 'absolute',
-        borderLeftColor: 'transparent',
-        borderBottomColor: 'transparent',
-        borderRightColor: '#3498db',
-        borderTopColor: '#3498db',
-        transform: [{ rotateZ: '-45deg' }]
-    },
-    offsetLayer: {
-        width: 200,
-        height: 200,
-        borderWidth: 20,
-        borderRadius: 100,
-        borderLeftColor: 'transparent',
-        borderBottomColor: 'transparent',
-        borderRightColor: 'grey',
-        borderTopColor: 'grey',
-        transform: [{ rotateZ: '-135deg' }]
-    }
+
 });
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(ActionCreators, dispatch);

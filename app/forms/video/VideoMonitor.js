@@ -60,11 +60,11 @@ class VideoMonitor extends Component {
         footerIconColor='#fff'
         containerStyle={{ backgroundColor: '#000' }}
         title="ویدئو"
-        headerIconColor="#00ced1"
+        headerIconColor="#2a8892"
         headerItems={[
           { text: 'ویدئو', color: '#00ced1', },
           {
-            icon: 'ios-arrow-round-back-outline', width: 30, color: '#00ced1',
+            icon: 'ios-arrow-round-back-outline', width: 30, color: '#2a8892',
             onPress: () => { Actions.pop() }
           },
         ]}
@@ -86,7 +86,7 @@ class VideoMonitor extends Component {
           apiPath='Videos'
           title="ویدئو"
           monitorHight={this.state.monitorHight}
-          headerIconColor="#00ced1"
+          headerIconColor="#2a8892"
           headerColor='#000'
           animateHeaderStartColor='#000'
           onsort={() => { }}
