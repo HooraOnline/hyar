@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Root } from "native-base";
 import { Router, Scene } from 'react-native-router-flux';
-import Starter from './forms/Starter.js';
 import CheckInternet from './components/CheckInternet.js';
 import SearchForm from './components/Form/SearchForm.js';
 import EntityBox from './components/Form/EntityBox.js';
@@ -31,6 +30,7 @@ import NewsList from './forms/news/NewsList.js';
 import NewsMonitor from './forms/news/NewsMonitor.js';
 import VideoMonitor from './forms/video/VideoMonitor.js';
 import MedicalTests from './forms/health/MedicalTests.js';
+import EditProfile from './forms/member/EditProfile.js';
 
 
 export default class App extends Component {
@@ -74,6 +74,7 @@ export default class App extends Component {
              <Scene key="VideoMonitor" component={VideoMonitor} title="VideoMonitor" hideNavBar={true} />
             {/********** member ******/}
             <Scene key="Profile" component={Profile} title="Profile" hideNavBar={true} />
+            <Scene key="EditProfile" component={EditProfile} title="EditProfile" hideNavBar={true} />
             <Scene key="Login" component={Login} title="Login" hideNavBar={true} />
             <Scene key="ChangePassword" component={ChangePassword} title="ChangePassword" hideNavBar={true} />
             <Scene key="PasswordRecovery" component={PasswordRecovery} title="PasswordRecovery" hideNavBar={true} />

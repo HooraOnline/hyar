@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { Header, Text, Col, Row, View, } from 'native-base';
-import { ScrollView } from 'react-native';
+import { ScrollView,Dimensions } from 'react-native';
 export default class FilterLine extends Component {
     constructor(props) {
         super(props)
@@ -10,15 +10,14 @@ export default class FilterLine extends Component {
     }
 
     render() {
-        // if(!this.props.items ||!this.props.items.lenght)
-        //     return null
+       
         return (
-            <ScrollView horizontal={this.state.items.length > 3?true:false} >
-                <Row style={[{ flex: 1, alignSelf: 'center', }, this.props.style]} >
+            <ScrollView horizontal={true}  contentContainerStyle={{ flexGrow: 1,      justifyContent: 'space-between' }}>
+                <Row style={[{  alignSelf: 'center',}, this.props.style,{}]} >
                     {
                         this.state.items &&
                         this.state.items.map((i, index) => {
-                            return <Col key={Math.random()} style={{ width: i.width || null, flex: 1, alignItems: 'center', justifyContent: 'center', alignItems: 'center' }}
+                            return <Col key={Math.random()} style={{   justifyContent: 'center', alignItems: 'center' }}
                                 onPress={() => {
                                     this.props.items.map((f) => f.selected = false)
                                     i.selected = true;
@@ -41,8 +40,6 @@ export default class FilterLine extends Component {
                     this.props.children
                 }
             </ScrollView>
-
-
         );
     }
 }

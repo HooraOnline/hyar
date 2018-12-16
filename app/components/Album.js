@@ -10,7 +10,7 @@ export class Album extends Component {
     }
 
     render() {
-        return (<Swiper activeDotColor="#fff" style={this.props.style} height={this.props.height} horizontal={true} autoplay={this.props.autoPlay}>
+        return (<Swiper  bounces={false} showsPagination={true} activeDotColor="#fff" dotColor="#777" style={this.props.style} height={this.props.height} horizontal={true} autoplay={this.props.autoPlay}>
             {
                 this.props.items &&
                 this.props.items.map(item => {

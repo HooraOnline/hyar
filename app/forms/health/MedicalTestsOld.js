@@ -97,9 +97,9 @@ class MedicalTestsOld extends Component {
                 footerStyle={{ backgroundColor: '#0c6366' }}
                 footerIconColor='#fff'
                 title="سلامت"
-                headerIconColor="#2a8892"
+                headerIconColor="#00ced1"
                 headerItems={[
-                    { text: 'آزمایش پزشکی', color: '#2a8892', },
+                    { text: 'آزمایش پزشکی', color: '#00ced1', },
                     {
                         icon: 'ios-arrow-round-back-outline', width: 30, 
                         onPress: () => { Actions.pop() }

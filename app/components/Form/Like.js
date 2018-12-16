@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
-import { Text, Icon, Col } from 'native-base';
+import { Text, Icon, View } from 'native-base';
+import { TouchableOpacity  } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../aRedux';
 import connect from 'react-redux/lib/connect/connect';
@@ -47,10 +48,13 @@ class Like extends Component {
   render() {
 
     return (
-      <Col style={this.props.style} onPress={() => { this.like() }}>
-        <Text style={{ paddingHorizontal: 10, fontSize: 12, color:  this.state.userLike.status ? this.props.likeColor || '#faaa22' : this.props.color || '#85929E', fontFamily: 'iran_sans' }}><Icon name= {this.props.icon ||'md-thumbs-up'} style={{ color: this.state.userLike.status ? this.props.likeColor || '#faaa22' : this.props.color || '#85929E', fontSize:this.props.size || 18 }} /> {this.props.entity.like || 0}</Text>
-      </Col>
-
+      
+      <TouchableOpacity  style={[this.props.style, { flexDirection: 'row' }]} onPress={() => { this.like() }}>
+        <View style={[{ flexDirection: this.props.vertical?'column':'row' }]}>
+          <Icon name={this.props.icon || 'md-thumbs-up'} style={{ color: this.state.userLike.status && this.props.entity.like ? this.props.likeColor || '#faaa22' : this.props.color || '#85929E', fontSize: this.props.size || 18 }} />
+          <Text style={{ paddingHorizontal: this.props.vertical?0:5, fontSize: 15, color: this.state.userLike.status && this.props.entity.like ? this.props.likeColor || '#faaa22' : this.props.color || '#85929E', fontFamily: 'iran_sans' }}> {this.props.entity.like || 0}</Text>
+        </View>
+      </TouchableOpacity >
     );
   }
 }

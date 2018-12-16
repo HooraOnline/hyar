@@ -73,8 +73,6 @@ class Login extends Component {
             })
     }
     componentDidMount() {
-
-
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     }
 
@@ -83,7 +81,7 @@ class Login extends Component {
     }
 
     handleBackPress = () => {
-        if (Actions.currentParams.title == "Login") {
+        if (Actions.currentParams.title == "Login" || Actions.currentParams.title == "MainForm") {
             //this.goBack();
             return true;
         }
@@ -94,7 +92,7 @@ class Login extends Component {
         return (
             <Container style={{ flex: 1, height: '100%' }}>
                 <Content style={styles.container}>
-                    <Image source={require('../../assets/logo-text.png')} style={styles.imageStyle} />
+                    <Image source={require('../../assets/logo-text1.png')} style={styles.imageStyle} />
                     < View style={{ paddingBottom: 9, marginTop: 60, }} />
                     <TextInput style={styles.input} onChangeText={(username) => this.setState({ username })} placeholder="نام کاربری" underlineColorAndroid="transparent" />
 

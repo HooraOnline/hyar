@@ -33,18 +33,16 @@ class ListLoader extends Component {
         }
     }
 
-    componentDidMount() {
-        this.loadData();
-    }
+
     onPressRow = (item, index) => {
         let selectedItem = item != this.state.selectedItem ? item : null;
-        let rKey = this.props.rKey || "currentEntity";
+        let reduxSelectedKey = this.props.reduxSelectedKey || "currentEntity";
         if (selectedItem)
             this.select(selectedItem)
         else
             this.unSelect(selectedItem)
         if (this.props.onPressRow) this.props.onPressRow(item, index, this)
-        this.props.doDispatch(rKey, item);
+        this.props.doDispatch(reduxSelectedKey, item);
     }
     select = (item) => {
         this.state.isRenderSelected = true;
@@ -67,8 +65,8 @@ class ListLoader extends Component {
             });
     }
     filterList = (filter) => {
-       debugger
-        this.filter=filter;
+        debugger
+        this.filter = filter;
         this.state.dataArray = [];
         this.state.pageIndex = 0;
         this.loadData();
@@ -83,21 +81,27 @@ class ListLoader extends Component {
     loadData = (pageIndex) => {
         let pageSize = this.props.pageSize || 10;
         //let condition={ and: [{ sellerId: this.props.cUser.id }, { paymentMethod: "check" }, { or: [{ step: "newCheck" }, { step: "resend" }, { step: "checkConfirm" }, { step: "checkSpend" }, { step: "checkPassed" }, { step: "checkBacked" }] }] };
-        let apiPath = this.props.apiPath || 'albums';
+        let apiPath = this.props.apiPath;
         this.setState({ footerloading: true })
-        return this.props.fetchPagedList(apiPath, null, this.filter || this.props.filter || {}, this.sort || this.props.sort || "udate asc", pageIndex || this.state.pageIndex, pageSize).then(tList => {
+        return this.props.fetchPagedList2(apiPath, null, this.filter || this.props.filter || {}, this.sort || this.props.sort || "udate asc", pageIndex || this.state.pageIndex, pageSize).then(tList => {
             var isCallLoadMore = true;
-            if (tList.length == 0) isCallLoadMore = false;
-            let data = this.state.dataArray.concat(tList);
+            if (tList.items.length == 0) isCallLoadMore = false;
+            
+            let data = this.state.dataArray.concat(tList.items);
+            this.props.doDispatch(this.props.reduxListKey, data);
             this.setState({ dataArray: data, isLoading: false, footerloading: false, isCallLoadMore: isCallLoadMore });
         }).catch(e => {
             this.setState({ isLoading: false, });
         });
     }
     refreshList = () => {
-        this.state.dataArray = [];
-        this.state.pageIndex = 0;
+        this.resetList();
         this.loadData();
+    }
+    resetList = () => {
+        this.state.dataArray = [];
+        this.props.doDispatch(this.props.reduxListKey, []);
+        this.state.pageIndex = 0;
     }
     handleScroll = (event) => {
         if (this.props.onScroll)
@@ -108,9 +112,14 @@ class ListLoader extends Component {
         // if (this.flatList)
         //  this.flatList.scrollToIndex({ index: 0, viewOffset: 0, viewPosition: 0.5, animated: true, });
     }
+    componentDidMount() {
+        if (this.props.loadFromLocalStore && this.props.dataList.length)
+            return;
+        this.refreshList();
+    }
     renderMonitor = (entiy) => {
         if (this.props.renderMonitor)
-            return <View style={{ flex: 1,  width: null, height: null }} >
+            return <View style={{ flex: 1, width: null, height: null }} >
                 {
                     this.props.renderMonitor(entiy)
                 }
@@ -123,15 +132,73 @@ class ListLoader extends Component {
                 }
             </View>
         if (this.props.renderAlbum)
-            return <View style={{ flex: 1,  width: null, height: null }} >
+            return <View style={{ flex: 1, width: null, height: null }} >
                 {
                     this.props.renderAlbum()
                 }
             </View>
-       
+
         return null;
     }
+    getFlatList = () => {
+        return <View style={[{ flex: 1, }, this.props.style]}>
+            <FlatList
+                ref={(ref) => { this.flatList = ref; }}
+                horizontal={this.props.horizontal}
+                style={[{}]}
+                data={this.props.dataList}
+                renderItem={({ item, index }) => (
+                    <View key={item.id} style={{ flex: 1 }}>
+                        <TouchableOpacity activeOpacity={1} style={[this.state.selectedItem == item && this.props.selectable ? { backgroundColor: this.props.selecterRowColor || 'transparent' } : {}, this.props.rowStyle || { paddingVertical: 0 }]} onPress={(e) => { if (this.state.inScroll) return; this.onPressRow(item, index); }}>
+                            {
+                                this.props.renderItem &&
+                                this.props.renderItem(item)
+                            }
+                        </TouchableOpacity>
+                        {
+                            this.props.haveLine != false &&
+                            <Line color={this.props.seperatorColor} height={this.props.seperatorHight || 1} margin={this.props.seperatorMargin || 2} padding={this.props.seperatorPadding || 20} />
+                        }
 
+
+                    </View>
+                )}
+                ListHeaderComponent={() =>
+                    <View>
+                        <View style={{ flex: 1 }}>
+                            {
+                                this.props.renderListHeader &&
+                                this.props.renderListHeader(this)
+                            }
+                        </View>
+                    </View>
+
+                }
+                ListEmptyComponent={() =>
+                    <View>
+                        {
+                            this.props.renderEmptyList || <Text style={{ fontFamily: 'iran_sans_bold', fontSize: 13, padding: 20 }}>{this.props.emptyText || ''}</Text>
+
+                        }
+
+                    </View>
+
+                }
+                onEndReachedThreshold={1}
+                onScroll={(event) => this.handleScroll(event)}
+                onScrollBeginDrag={() => { this.state.inScroll = true; }}
+                onScrollEndDrag={() => { this.state.inScroll = false; }}
+                onEndReached={({ distanceFromEnd }) => {
+                    if (!this.state.isCallLoadMore) return;
+                    let pIndex = this.state.pageIndex + 1;
+                    this.state.pageIndex = this.state.pageIndex + 1;
+                    this.loadData(pIndex);
+                }}
+                keyExtractor={(item, index) => item.id}
+                ListFooterComponent={this.renderFooter}
+            />
+        </View>
+    }
     renderFooter = () => {
         if (!this.state.footerloading) return null;
         return (
@@ -147,16 +214,11 @@ class ListLoader extends Component {
                     <Text style={{ padding: 20, paddingTop: 70 }}>در حال بارگذاری ...</Text>
                 </View>
             );
-        // if (this.state.dataArray.length == 0)
-        //     return (
-        //         <View>
-        //             <Text style={{ padding: 20, paddingTop: 70 }}>هیچ آیتمی وجود ندارد.</Text>
-        //         </View>
-        //     );
+        if (this.props.haveAnimate == false)
+            return this.getFlatList();
         return (
+
             <View>
-
-
                 <AnimatForm
                     headerColor={this.props.headerColor}
                     monitorHight={this.state.monitorHight}
@@ -166,51 +228,7 @@ class ListLoader extends Component {
                         return this.renderMonitor(this.state.selectedItem)
                     }}
                     renderBody={(animateForm) => {
-                        return <View style={[{ flex: 1, }, this.props.style]}>
-                            <FlatList
-                                ref={(ref) => { this.flatList = ref; }}
-                                horizontal={this.props.horizontal}
-                                style={[{}]}
-                                data={this.state.dataArray}
-                                renderItem={({ item, index }) => (
-                                    <View key={item.id} style={{ flex: 1 }}>
-                                        <TouchableOpacity activeOpacity={0.9} key={item.id} style={[this.state.selectedItem == item ? { backgroundColor:this.props.selecterRowColor || 'transparent' } : {}, this.props.rowStyle || { paddingVertical: 0 }]} onPress={(e) => { if (this.state.inScroll) return; this.onPressRow(item, index); }}>
-                                            {
-                                                this.props.renderItem &&
-                                                this.props.renderItem(item)
-                                            }
-                                        </TouchableOpacity>
-
-                                        <Line color={this.props.seperatorColor} height={this.props.seperatorHight || 1} margin={this.props.seperatorMargin || 2} padding={this.props.seperatorPadding || 20} />
-                                       
-                                    </View>
-                                )}
-                                ListHeaderComponent={() =>
-                                    <View>
-                                        <View style={{ flex: 1 }}>
-                                            {
-                                                this.props.renderListHeader &&
-                                                this.props.renderListHeader(this)
-                                            }
-                                        </View>
-                                    </View>
-
-                                }
-                                onEndReachedThreshold={1}
-                                onScroll={() => this.handleScroll(event)}
-                                onScrollBeginDrag={() => { this.state.inScroll = true; }}
-                                onScrollEndDrag={() => { this.state.inScroll = false; }}
-                                onEndReached={({ distanceFromEnd }) => {
-                                    // console.warn('on end reached ', distanceFromEnd)
-                                    if (!this.state.isCallLoadMore) return;
-                                    let pIndex = this.state.pageIndex + 1;
-                                    this.state.pageIndex = this.state.pageIndex + 1;
-                                    this.loadData(pIndex);
-                                }}
-                                keyExtractor={(item, index) => item.id}
-                                ListFooterComponent={this.renderFooter}
-                            />
-                        </View>
+                        return this.getFlatList();
                     }}
 
                     renderFixedBar={(animateForm) => {
@@ -224,7 +242,7 @@ class ListLoader extends Component {
                             {
                                 this.state.filterbarItems &&
                                 <View style={{ flex: 1 }}>
-                                    <FilterLine filterList={(filter)=>this.filterList(filter)} items={this.state.filterbarItems} onfilter={this.props.onfilter} textStyle={this.props.filterbartextStyle} style={this.props.filterbarStyle} />
+                                    <FilterLine filterList={(filter) => this.filterList(filter)} items={this.state.filterbarItems} onfilter={this.props.onfilter} textStyle={this.props.filterbartextStyle} style={this.props.filterbarStyle} />
                                 </View>
                             }
                             {
@@ -239,7 +257,6 @@ class ListLoader extends Component {
                     }
 
                 >
-
                 </AnimatForm>
 
             </View>
@@ -258,9 +275,9 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(ActionCreators, dispatch);
 }
-export default connect((state) => {
+export default connect((state, props) => {
     return {
-        list: state.currentList,
+        dataList: state[props.reduxListKey],
         cUser: state.cUser,
     }
 }, mapDispatchToProps)(ListLoader);

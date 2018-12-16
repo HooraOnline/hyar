@@ -1,4 +1,4 @@
-import RN, {React, Alert, AsyncStorage } from 'react-native';
+import RN, { React, Alert, AsyncStorage } from 'react-native';
 import Api from './api';
 import Dimensions from 'Dimensions';
 import { dataAdapter } from './dataAdapter';
@@ -34,6 +34,12 @@ Date.prototype.toPersionDate = function (format) {
     return date + " ساعت: " + time;
   if (format == 'time')
     return time
+  if (format = 'weak') {
+    let dayOfWeak = this.getDay();
+    let weakDays = ["", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج شنبه", "جمعه", "شنبه", "یکشنبه"];
+    return weakDays[dayOfWeak] + '  ' + date + " ساعت: " + time;
+  }
+
   return date;
 };
 Date.prototype.addDay = function (day) {
@@ -41,9 +47,38 @@ Date.prototype.addDay = function (day) {
   let newDate = new Date(this.setDate(this.getDate() + dayAdd));
   return newDate;
 };
+Date.prototype.timeToNow = function () {
+  var target;
+  try {
+    target = new Date(this);
+  } catch (ex) {
+    return "فرمت اشتباه";
+  }
+  let now = new Date();
+  let milisecend = now - target;
+  let m = milisecend / 60000;
+  if (m < 1)
+    return 'جدیدا';
+  if (m < 60)
+    return Math.round(m) + ' دقیقه پیش';
+  let h = m / 60;
+  if (h < 24)
+    return Math.round(h) + ' ساعت پیش';
+  let day = h / 24;
+  if (day < 7)
+    return Math.round(day) + ' روز پیش';
+  let w = day / 7;
+  if (w < 4)
+    return Math.round(w) + ' هفته پیش';
+  let month = day / 30;
+  if (month <12)
+    return Math.round(month) + ' ماه پیش';
+  let year = month / 12;
+  return Math.round(year) + ' سال پیش';
+}
 Number.prototype.format = function (c, d, t) {
   var n = this,
-  c = isNaN(c = Math.abs(c)) ? 0 : c,
+    c = isNaN(c = Math.abs(c)) ? 0 : c,
     d = d == undefined ? "." : d,
     t = t == undefined ? "," : t,
     s = n < 0 ? "-" : "",
@@ -265,9 +300,9 @@ class util {
   }
   loginLocally(success, failed) {
     return this.getTokenFromStorage(function (userId, token) {
-             dataAdapter.getUserById(userId).then((user) => {
-              if (success) success(user, token);
-             });
+      dataAdapter.getUserById(userId).then((user) => {
+        if (success) success(user, token);
+      });
     }, failed);
   }
   confirm(title, confirmMessage, okfunc, actionButtomArray) {
@@ -302,16 +337,16 @@ class util {
       return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
     });
   }
-   
+
   xmlToJson(xml) {
-	
+
     // Create the return object
     var obj = {};
-  
+
     if (xml.nodeType == 1) { // element
       // do attributes
       if (xml.attributes.length > 0) {
-      obj["@attributes"] = {};
+        obj["@attributes"] = {};
         for (var j = 0; j < xml.attributes.length; j++) {
           var attribute = xml.attributes.item(j);
           obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
@@ -320,16 +355,16 @@ class util {
     } else if (xml.nodeType == 3) { // text
       obj = xml.nodeValue;
     }
-  
+
     // do children
     if (xml.hasChildNodes()) {
-      for(var i = 0; i < xml.childNodes.length; i++) {
+      for (var i = 0; i < xml.childNodes.length; i++) {
         var item = xml.childNodes.item(i);
         var nodeName = item.nodeName;
-        if (typeof(obj[nodeName]) == "undefined") {
+        if (typeof (obj[nodeName]) == "undefined") {
           obj[nodeName] = xmlToJson(item);
         } else {
-          if (typeof(obj[nodeName].push) == "undefined") {
+          if (typeof (obj[nodeName].push) == "undefined") {
             var old = obj[nodeName];
             obj[nodeName] = [];
             obj[nodeName].push(old);
@@ -340,47 +375,48 @@ class util {
     }
     return obj;
   };
-   getResponse(url, callback) {
+  getResponse(url, callback) {
     let xhr = new XMLHttpRequest();
-    xhr.onload = function () { 
-      callback(this.responseText) 
+    xhr.onload = function () {
+      callback(this.responseText)
     };
     xhr.open('GET', url, true);
     xhr.send();
   }
-  string2React(text){
+  string2React(text) {
     parser = new DOMParser();
-    xmlDoc = parser.parseFromString(text,"text/xml");
-    let json=this.xmlToJson(xmlDoc);
+    xmlDoc = parser.parseFromString(text, "text/xml");
+    let json = this.xmlToJson(xmlDoc);
     return json;
   }
   getMongoObjectId() {
     var timestamp = (new Date().getTime() / 1000 | 0).toString(16);
-    return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
-        return (Math.random() * 16 | 0).toString(16);
+    return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function () {
+      return (Math.random() * 16 | 0).toString(16);
     }).toLowerCase();
   };
-  nibsonToReactNative(nibson){
+  nibsonToReactNative(nibson) {
     const list =
-    React.createElement(RN.View, {},
-      React.createElement(RN.Text, {}, 'My favorite ice cream flavors'),
       React.createElement(RN.View, {},
-        [
-          React.createElement(RN.Image, { style:{borderRadius: 6, resizeMode: 'cover', height: 115, width: 100, },class: 'white',source:{uri:'http://n.diemacher.at/assets/front/images/team/david-boehm.jpg'} }, null),
-          React.createElement(RN.Text, {style:{color:'red'}, class: 'brown' }, entity444.mobile),
-          React.createElement(RN.Text, { style:{color:'red'},class: 'white' }, 'Vanilla'),
-          React.createElement(RN.Text, {style:{color:'blue'}, class: 'yellow' }, 'Banana')
-        ]
-      )
-    );
+        React.createElement(RN.Text, {}, 'My favorite ice cream flavors'),
+        React.createElement(RN.View, {},
+          [
+            React.createElement(RN.Image, { style: { borderRadius: 6, resizeMode: 'cover', height: 115, width: 100, }, class: 'white', source: { uri: 'http://n.diemacher.at/assets/front/images/team/david-boehm.jpg' } }, null),
+            React.createElement(RN.Text, { style: { color: 'red' }, class: 'brown' }, entity444.mobile),
+            React.createElement(RN.Text, { style: { color: 'red' }, class: 'white' }, 'Vanilla'),
+            React.createElement(RN.Text, { style: { color: 'blue' }, class: 'yellow' }, 'Banana')
+          ]
+        )
+      );
   }
+
 
 }
 
 export const Util = new util();
-Util.device={};
-Util.device.width=Dimensions.get('window').width;
-Util.device.height=Dimensions.get('window').height;
+Util.device = {};
+Util.device.width = Dimensions.get('window').width;
+Util.device.height = Dimensions.get('window').height;
 
 
 

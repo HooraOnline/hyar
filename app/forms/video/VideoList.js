@@ -7,7 +7,7 @@ import {
     Col
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { Image, StyleSheet, View, ImageBackground, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, View, ImageBackground, TouchableHighlight } from 'react-native';
 import MasterPage from "../MasterPage";
 import connect from 'react-redux/lib/connect/connect';
 import { bindActionCreators } from 'redux'
@@ -41,12 +41,12 @@ class VideoList extends Component {
             for (let i = 0; i < nList.length; ++i)
                 topVideo.push({
                     image: Api.getFilePath('video') + nList[i].image,
-                     onPress: () => {  Actions.VideoMonitor({ monitorEntity: nList[i] })},
+                    onPress: () => {  Actions.VideoMonitor({ monitorEntity: nList[i] }) },
                     content: <Grid style={{ flex: 1 }} >
                         <Row style={{}} >
                             <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', flex: 1, margin: 15 }}>
                                 <Text style={{ fontFamily: 'iran_sans_bold', fontSize: 15, color: '#fff', padding: 5 }} >{nList[i].title}</Text>
-                                <Text style={{ fontFamily: 'iran_sans', fontSize: 17, color: '#fff' }}>{nList[i].desc.substring(0,50)+'...'}</Text>
+                                <Text style={{ fontFamily: 'iran_sans', fontSize: 17, color: '#fff' }}>{nList[i].desc.substring(0, 50) + '...'}</Text>
                             </View>
                         </Row>
                     </Grid>
@@ -73,12 +73,12 @@ class VideoList extends Component {
                 footerIconColor='#fff'
                 containerStyle={{ backgroundColor: '#000' }}
                 title="ویدئو"
-                headerIconColor="#2a8892"
+                headerIconColor="#00ced1"
                 headerItems={[
-                    { text: 'ویدئو', color: '#2a8892', },
+                    { text: 'ویدئو', color: '#00ced1', },
                     {
-                        icon: 'ios-arrow-round-back-outline', width: 30, color: '#2a8892',
-                        onPress: () => { Actions.pop()}
+                        icon: 'ios-arrow-round-back-outline', width: 30, color: '#00ced1',
+                        onPress: () => { Actions.pop() }
                     },
                 ]}
             >
@@ -94,22 +94,20 @@ class VideoList extends Component {
                         { text: 'هنر', field: 'videoGroup', value: '07' },
                         { text: 'کتابخوانی', field: 'videoGroup', value: '08' },
                         { text: 'مسابقات', field: 'videoGroup', value: '09' },]}
-                    filterbarStyle={{ backgroundColor: '#000', height: 50 }}
+                    filterbarStyle={{ backgroundColor: '#000', height: 30 }}
                     filterbartextStyle={{ color: '#fff' }}
                     apiPath='Videos'
                     title="ویدئو"
                     monitorHight={this.state.monitorHight}
-                    headerIconColor="#2a8892"
+                    headerIconColor="#00ced1"
                     headerColor='#000'
                     onsort={() => { }}
                     style={{ backgroundColor: '#000' }}
                     seperatorColor='#000'
-                    onScroll={(scroolY, event) => {
-                        // console.log(event.velocity.y)
-                    }}
                     pageSize={7}
                     filter={{}}
-                    rKey="currentEntity"
+                    reduxSelectedKey="currentEntity"
+                    reduxListKey='videoList'
                     sort="id desc"
                     itemHeight={200}
                     renderMonitor={() => {
@@ -117,33 +115,21 @@ class VideoList extends Component {
                     }}
                     renderItem={(entity) => <View style={{ backgroundColor: '#000' }}>
                         <ImageBackground imageStyle={{ borderRadius: 0 }} opacity={0.9} resizeMode="cover" source={{ uri: Api.getFilePath('video') + entity.image }} style={{ backgroundColor: "#000", flex: 1, height: 200, width: null, }}>
-                            <Grid style={{ flex: 1, }}>
-                                <Row style={{ height: 30, margin: 10 }} >
-                                    <Col style={{ width: 80 }} >
-                                     
-                                    </Col>
-                                    <Col style={{ flex: 1 }}>
-                                    </Col>
-                                    <Col style={{ width: 80 }} >
-                                        <Like apiPath="videos" entity={entity} viewMode={true} color='#fff' />
-                                    </Col>
-                                </Row>
-                                <Row style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }} onPress={() => {
-                                        Actions.VideoMonitor({ monitorEntity: entity })
-                                    }}>
-                                    <Image style={{ resizeMode: 'contain', alignSelf: "center", height: 60 }}  source={require('../../assets/playSign.png')} />
-                                </Row>
-                                <Row style={{ height: 20, margin: 10 }} >
-                                    <Col style={{ width: 80, alignItems: 'center' }}>
-                                        <Seen color='#fff' seen={entity.seen} />
-                                    </Col>
-                                    <Col style={{ flex: 1 }}>
-                                    </Col>
-                                    <Col style={{ width: 80 }} >
-                                        <Text style={{ fontSize: 15, fontFamily: 'iran_sans', color: '#fff', paddingHorizontal: 5, }}>{entity.time || '00:00'}</Text>
-                                    </Col>
-                                </Row>
-                            </Grid>
+                            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', }}>
+                                <View style={{ height: 50, alignItems: 'flex-end',justifyContent:'center', }} >
+                                    <Like apiPath="videos" entity={entity} showUserLike={false} viewMode={true}  color='#fff'  style={{ margin:14, borderRadius: 4,  paddingHorizontal:5,}}/>
+                                </View>
+                                <View style={{ flex: 1, alignItems: 'center',justifyContent:'center',  }} >
+                                    <TouchableHighlight style={{ width: 56, height: 56, borderRadius: 28 }} activeOpacity={0.5} underlayColor='#000' onPress={() => { Actions.VideoMonitor({ monitorEntity: entity }) }} >
+                                        <Image style={{ resizeMode: 'contain', alignSelf: "center", height: 60 }} source={require('../../assets/playSign.png')} />
+                                    </TouchableHighlight>
+                                </View>
+                                <View style={{ height: 50,flexDirection:'row',justifyContent: 'space-between', }} >
+                                   <Seen color='#fff' style={{ backgroundColor: '#000', borderRadius: 4,  margin:14,paddingHorizontal:5, }} seen={entity.seen} />
+                                   <Text style={{ fontSize: 15, fontFamily: 'iran_sans', color: '#fff', paddingHorizontal: 5,margin:14, backgroundColor: '#000',  borderRadius: 4, textAlign: 'center' }} >{entity.time || '00:00'}</Text>
+                                </View>
+                            </View>
+                           
                         </ImageBackground>
                         <View style={{ flexDirection: 'row', flex: 1, margin: 10, borderRadius: 3, alignItems: 'center', }} >
                             <View style={{ flex: 1, }}>
@@ -157,7 +143,8 @@ class VideoList extends Component {
                     </View>
                     }
                     onSelect={(entity, row, form) => {
-                        //Actions.VideoMonitor({ monitorEntity: entity })
+                        Actions.pop();
+                        Actions.VideoMonitor({ monitorEntity: entity })
                     }}
 
                 />

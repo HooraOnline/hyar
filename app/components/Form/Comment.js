@@ -7,9 +7,8 @@ import { ProgressBarPT } from './ProgressBarPT';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../aRedux';
 import connect from 'react-redux/lib/connect/connect';
-import ListLoader from './ListLoaderOld';
+import ListLoader from './ListLoader';
 import Like from './Like';
-import Line from '../tools/Line';
 import Api from '../../lib/api';
 class Comment extends Component {
   constructor(props) {
@@ -51,20 +50,21 @@ class Comment extends Component {
       text: this.state.commentText,
       modelName: this.props.modelName,
       entityId: this.props.model.id,
-      writerName: this.props.cUser.firstName + this.props.cUser.lastName,
+      writerName: this.props.cUser.firstName + ' ' + this.props.cUser.lastName,
+      isDeleted: 0,
       cdate: new Date(),
       udate: new Date(),
     };
     this.setState({ commentText: '', inProgress: true })
-    this.props.addList('comments', [commentEntity], 'currentEntity', 'currentList')
+    this.props.addList('comments', [commentEntity], 'commentList')
       .then(() => {
-        this.setState({ commentText: '', inProgress: false })
-        Toast.show({
-          text: 'نظر شما دریافت شد.',
-          duration: 3000,
-          type: 'success',
-          position: "top"
-        })
+        this.setState({ inProgress: false })
+        // Toast.show({
+        //   text: 'نظر شما دریافت شد.',
+        //   duration: 3000,
+        //   type: 'success',
+        //   position: "top"
+        // })
 
         this.props.model.commentNumber = this.props.model.commentNumber ? this.props.model.commentNumber + 1 : 1;
         this.props.updateEntity(this.props.modelName, this.props.model);
@@ -79,49 +79,66 @@ class Comment extends Component {
         <Text style={{ alignSelf: "center", justifyContent: "center", color: 'red', fontFamily: 'iran_sans_bold', padding: 15, paddingTop: 30 }} > شما به این بخش دسترسی ندارید.</Text>
       );
     return (<Container>
-      <Content style={[{ flex: 1 }, this.props.style, { borderWidth: 0, backgroundColor: this.props.backgroundColor }]}>
-        <ListLoader
-          apiPath='comments'
-          pageSize={this.props.pageSize || 10}
-          formStyle={this.props.contentStyle}
-          filter={{ entityId: this.props.model.id }}
-          rKey="currentEntity2"
-          renderCustomEntity={this.props.renderEntity}
-          sort="id desc"
-          title={this.props.title || "نظرات"}
-          renderItem={(entity) => <View style={{ padding: 0.3, flex: 1, flexDirection: 'row', borderBottomWidth: 0, marginVertical: 5 }}>
-            {
-              this.props.renderItem &&
-              this.props.renderItem(entity)
-            }
-            {
-              !this.props.renderItem &&
-              <View style={{ borderBottomColor: '#999', marginHorizontal: 10, borderRadius: 0, flex: 1, backgroundColor: this.props.backgroundColor }}>
+      <Content style={[{ flex: 1 }, this.props.style, { borderWidth: 0, backgroundColor: this.props.backgroundColor, }]}>
+        <View style={{ paddingBottom: 100 }} >
+          <ListLoader
+            apiPath='comments'
+            haveAnimate={false}
+            pageSize={this.props.pageSize || 10}
+            seperatorHight={0}
+            formStyle={this.props.contentStyle}
+            monitorHight={0.2}
+            animateHeaderHeight={0.1}
+            haveLine={false}
+            emptyText="اولین نظر را شما ثبت کنید."
+            headerColor={this.props.headerColor}
+            animateHeaderStartColor={this.props.headerColor}
+            seperatorHight={0.7}
+            filter={{ entityId: this.props.model.id, isDeleted: 0 }}
+            reduxSelectedKey="currentEntity2"
+            reduxListKey='commentList'
+            renderListHeader={this.props.renderListHeader}
+            sort="id desc"
+            title={this.props.title || "نظرات"}
+            renderItem={(entity) => <View style={{ padding: 0.3, flex: 1, flexDirection: 'row', borderBottomWidth: 0, marginVertical: 5 }}>
+              {
+                this.props.renderItem &&
+                this.props.renderItem(entity)
+              }
+              {
+                !this.props.renderItem &&
+                <View style={{ borderBottomColor: '#999', margin: 10, borderRadius: 0, flex: 1, backgroundColor: this.props.backgroundColor }}>
+                  <Row style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Col style={{ width: 40 }}>
+                      <Image source={{ uri: Api.getFilePath('profile') + entity.memberAvatar }} style={styles.avatar} onPress={this.sendComment} />
+                    </Col>
+
+                    <Col style={{ flex: 1, }}>
+                      <Text style={{ fontFamily: 'iran_sans', }}> <Text style={{ fontFamily: 'iran_sans_bold', color: '#222222', fontSize: 12, paddingTop: 12, paddingVertical: 6 }}> {entity.writerName + '    '} </Text>{entity.text}</Text>
+                    </Col>
+                    <Col style={{ width: 70, alignItems: 'flex-end' }}>
+                      <Like vertical style={{}} size={this.props.iconSize || 18} apiPath="comments" storeKey="currentEntity2" entity={entity} />
+                    </Col>
+                    {/* {
+                      this.props.cUser.isAdmin &&
+                      <Col style={{ width: 20, alignItems: 'flex-end' }}>
+                        <Icon name='ios-trash' style={{ fontSize: 25, color: 'red' }} onPress={() => {
+                          entity.isDeleted = 1;
+                          this.props.updateEntity('comments', entity, 'commentList');
+                        }} />
+                      </Col>
+                    } */}
 
 
-                <Row style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                  <Col style={{ width: 40 }}>
-                    <Image source={{ uri: Api.getFilePath('profile') + entity.memberAvatar }} style={styles.avatar} onPress={this.sendComment} />
-                  </Col>
-
-                  <Col style={{ flex: 1, }}>
-                    <Text style={{ fontFamily: 'iran_sans', }}> <Text style={{ fontFamily: 'iran_sans_bold', color: '#222222', fontSize: 12, paddingTop: 12, paddingVertical: 6 }}> {entity.writerName + '    '} </Text>{entity.text}</Text>
-                  </Col>
-                  <Col style={{ width: 40 }}>
-                    <Like style={{}} size={this.props.iconSize || 18} apiPath="comments" storeKey="currentEntity2" entity={entity} />
-                  </Col>
-
-
-                </Row>
-
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                  <Text style={{ paddingHorizontal: 10, fontSize: 13, color: '#000', fontFamily: 'iran_sans', color: '#555', paddingTop: 12 }}>  {new Date(entity.udate).toPersionDate('dateTime')} </Text>
+                  </Row>
+                  <Row style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Text style={{ paddingHorizontal: 10, fontSize: 13, color: '#000', fontFamily: 'iran_sans', color: '#555', paddingTop: 12 }}>  {new Date(entity.udate).toPersionDate('weak')}<Text style={{  fontSize: 13, color: 'red', fontFamily: 'iran_sans', paddingTop: 12 }}> ({new Date(entity.udate).timeToNow()})  </Text> </Text>
+                  </Row>
                 </View>
-                {/* <Line height={1} margin={20} padding={20} /> */}
-              </View>
-            }
-          </View>
-          } />
+              }
+            </View>
+            } />
+        </View>
 
       </Content>
 
@@ -138,13 +155,13 @@ class Comment extends Component {
             {
 
               this.state.commentText ? <Col style={{ width: 43 }} onPress={() => this.sendComment()} >
-                <Text style={{ fontFamily: 'iran_sans', fontSize: 15, paddingHorizontal: 5,color:'#faaa22' }}>ارسال</Text>
+                <Text style={{ fontFamily: 'iran_sans', fontSize: 15, paddingHorizontal: 5, color: '#faaa22' }}>ارسال</Text>
               </Col> : null
             }
             {
 
-              this.state.inProgress ? <Col style={{ }} onPress={() => this.sendComment()} >
-                <Text style={{  color: 'green',fontFamily: 'iran_sans', fontSize: 15, paddingHorizontal: 5 }}>در حال ارسال...</Text>
+              this.state.inProgress ? <Col style={{}} onPress={() => this.sendComment()} >
+                <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 15, paddingHorizontal: 5 }}>در حال ارسال...</Text>
               </Col> : null
             }
 

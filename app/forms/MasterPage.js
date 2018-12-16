@@ -23,9 +23,9 @@ class MasterPage extends Component {
     }
     this.state.headerItems = props.headerItems;
     if (this.props.showMenu)
-      this.state.headerItems.unshift({ icon: 'ios-menu-outline', width: 30, color: this.props.headerIconColor || '#2a8892', onPress: () => { this.openDrawer(); } });
+      this.state.headerItems.unshift({ icon: 'ios-menu-outline', width: 30, color: this.props.headerIconColor || '#00ced1', onPress: () => { this.openDrawer(); } });
     if (this.props.showReturnBtn)
-      this.state.headerItems.push({ icon: 'ios-arrow-round-back-outline', width: 30, color: this.props.headerIconColor || '#2a8892', onPress: () => { Actions.pop(); } });
+      this.state.headerItems.push({ icon: 'ios-arrow-round-back-outline', width: 30, color: this.props.headerIconColor || '#00ced1', onPress: () => { Actions.pop(); } });
   }
   manageDrower = () => {
     this.setState({ drawerIsOpen: !this.state.drawerIsOpen })

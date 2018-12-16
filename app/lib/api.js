@@ -5,11 +5,11 @@ import {
 //const apihost = 'https://2bb117ad.ngrok.io/api/'
 //const apihost ='https://hamrahan.herokuapp.com/api/'
 //const apihost = 'http://192.168.1.199:3000/api/'
-const apihost ='http://185.88.154.168/api/' 
- 
- 
+const apihost = 'http://185.88.154.168/api/'
+const apihost2 = 'https://mcstest.mci.ir/api/'
+
 class Api {
-  static token = ""; 
+  static token = "";
   static headers() {
     return {
       'Content-Type': 'application/json',
@@ -17,11 +17,11 @@ class Api {
       // 'dataType': 'json',
       // 'access-token': Api.token,
     }
-  }   
+  }
   static apiAddress = apihost;
   static fileContainer = apihost + "containers/";
   static getFilePath(model) {
-    return apihost + "containers/" + model + "/download/" 
+    return apihost + "containers/" + model + "/download/"
   }
   // static adapter = create({
   //   baseURL: apihost,
@@ -43,7 +43,7 @@ class Api {
     //apiPath='members'
     let filterParams = {}
     if (filters) {
-      let condition = { where: { and: filters } }; 
+      let condition = { where: { and: filters } };
       if (andOr && andOr == "or")
         condition = { where: { or: filters } };
       filterParams.filter = condition
@@ -210,10 +210,69 @@ class Api {
 
 
   }
+  //*******************************abdi****************************************************** */
 
+  static fetchCollection2(apiPath, condition, order, limit, skip) {
+    debugger
+    let filterParams = {};
+    filterParams.where = condition || {};
+    filterParams.order = order || "";
+    filterParams.limit = limit || 10;
+    filterParams.skip = skip || 0;
+    return this.get2(apiPath, null, filterParams)
+  }
 
+  static get2(apiPath, model, filterParams, urlParams) {
+    return this.xhr2(apiPath, model, filterParams, urlParams, 'GET');
+  }
 
+  static xhr2(apiPath, body, filterParams, urlParams, method, verb) {
+    let urlParamsStr = "";
+    let filterParamsStr = "";
+    let tokenStr = "";
+    let urlParamList;
+    if (urlParams) {
+      urlParamList = Object.getOwnPropertyNames(urlParams);
+      for (let i = 0; i < urlParamList.length; ++i) {
+        let key = urlParamList[i];
+        urlParamsStr += key + '=' + urlParams[key] + '&';
+      }
+    }
+    console.log(filterParams)
+    if (filterParams == "undefined")
+      filterParams = undefined;
+    // if (filterParams)
+    //   try {
+    //     let verb2 = verb || 'filter'
+    //     filterParamsStr = verb2 + '=' + encodeURIComponent(JSON.stringify(filterParams));
+    //   } catch (error) {
 
+    //   }
+    if (filterParams == "undefined")
+      token = undefined;
+    if (this.token)
+      tokenStr = `access_token=${this.token}`;
+    let options = Object.assign({ method: method }, body ? { body: JSON.stringify(body) } : null);
+    //options.headers = Api.headers();
+    let url = `${apihost2}${apiPath}/?page=${filterParams.skip }&limit=${filterParams.limit || 10}`
+
+    url = url.replace('&&', '&');
+    console.log(url);
+    return fetch(url, options)
+      .then(res => res.json())
+      .catch(error => {
+        console.log('Error:', error)
+        throw error;
+        this.props.addEntity("bugs", { err: error });
+      })
+      .then(response => {
+        console.log('Success:', response)
+        if (response.error)
+          throw response.error;
+        return response;
+      });
+
+  }
 }
 
 export default Api

@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import {
     Text,
-    CheckBox,Spinner
+    Item,
+    Spinner,
+    CheckBox
 } from 'native-base';
 
 import ExpoImageManager from '../../components/ExpoImageManager';
@@ -15,7 +17,8 @@ import Api from '../../lib/api';
 import { Actions } from 'react-native-router-flux';
 
 
-class Profile extends Component {
+
+class EditProfile extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -31,30 +34,35 @@ class Profile extends Component {
     render() {
         return (
             <MasterPage
-                showMenu={false}
+                showMenu={true}
                 footertabIndex={1}
                 showReturnBtn={true}
                 footerStyle={{ backgroundColor: '#35536d' }}
                 footerIconColor='#fff'
                 headerTransparent={false}
                 headerStyle={{ backgroundColor: '#35536d' }}
-                title="پروفایل"
+                title="ویرایش پروفایل"
                 headerColor='#35536d'
                 headerIconColor="#fff"
                 headerItems={[
-                    { icon: 'md-create', iconSize: 28, width: 30, color: '#fff', onPress: () => { Actions.EditProfile(); } },
-                    { text: 'پروفایل', color: '#fff', },
+                    { text: 'ویرایش پروفایل', color: '#fff', },
+
                 ]}
             >
                 <View style={styles.container}>
-                    <View style={styles.header}>
-                        <Image source={require('../../assets/Header.png')} style={{ resizeMode: 'cover', flex: 1 }} />
-                    </View>
-                    {/* <Item>
-                        <ExpoImageManager style={styles.avatar} imageStyle={styles.avatar} editable={true} height='100%' storeKey="cUser" imageField="profileImage" apiPath="members" uploadFolder="profile" noImage="profileNoImage.jpg" />
-                    </Item> */}
+                    <Item>
+                        <ExpoImageManager  style={{ width: '100%', height: 200 }}
+                         imageStyle={{ width: '100%', height: 200 }} 
+                         editable={true} height='100%' storeKey="cUser"
+                          imageField="profileImage" apiPath="members" 
+                          uploadFolder="profile"
+                          onsuccess={(user)=>console.log(user)} 
+                          noImage="profileNoImage.jpg" 
+                           />
+                    </Item>
 
-                    <Image source={{ uri: Api.getFilePath('profile') + this.props.cUser.profileImage }} style={styles.avatar} />
+
+                    {/* <Image source={{ uri: Api.getFilePath('profile') + this.props.cUser.profileImage }} style={styles.avatar} />  */}
 
                     <View style={styles.body}>
 
@@ -64,28 +72,22 @@ class Profile extends Component {
                             {/* <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text> */}
                         </View>
 
-                        <View style={styles.viewStyle} >
-                            <Text style={styles.lableStyle}> کد پرسنلی</Text>
-                            <Text style={{ flex: 1, fontFamily: 'iran_sans' }}> {this.props.cUser.personalCode}</Text>
-                        </View>
-                        <View
-                            style={styles.horizentalLine}
-                        />
+                        <View style={styles.horizentalLine} />
                         <View style={styles.viewStyle} >
                             <Text style={styles.lableStyle}> موبایل </Text>
                             <Text style={{ flex: 1, fontFamily: 'iran_sans' }}> {this.props.cUser.mobile}</Text>
                         </View>
-                        {/* <View style={[styles.viewStyle]} >
+                        <View style={styles.horizentalLine} />
+                        <View style={[styles.viewStyle]} >
                             <Text style={styles.lableStyle}>نمایش موبایل به همکاران</Text>
                             <View style={{ width: 40 }}>
                                 {
                                     this.state.inProgress ?
-                                    <Spinner size={12} color='green'style={{paddingTop:60}} />
+                                        <Spinner size={12} color='green' style={{ paddingTop: 60 }} />
                                         : <CheckBox color='#145A32' checked={this.props.cUser.showMobile} onPress={() => { if (this.state.inProgress) return; this.props.cUser.showMobile = !this.props.cUser.showMobile; this.updateUser(this.props.cUser) }} />
                                 }
-
                             </View>
-                        </View> */}
+                        </View>
                         <View
                             style={styles.horizentalLine}
                         />
@@ -195,7 +197,6 @@ export default connect((state) => {
     return {
         cUser: state.cUser,
     }
-}, mapDispatchToProps)(Profile);
+}, mapDispatchToProps)(EditProfile);
 
 
-//this.props.cUser

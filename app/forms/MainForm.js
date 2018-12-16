@@ -97,6 +97,7 @@ class MainForm extends Component {
                 footertabIndex={1}
                 containerStyle={{ backgroundColor: '#f2f4f7', }}
                 footerStyle={{ backgroundColor: '#fff' }}
+                headerIconColor="#2a8892"
                 title="هم راه"
                 headerItems={[
                     { text: 'هم راه', color: '#2a8892', },

@@ -111,7 +111,7 @@ class PasswordRecovery extends React.Component {
                 showFooter={false}
                 headerColor='#fff'
                 title="هم راه"
-                headerIconColor="#2a8892"
+                headerIconColor="#00ced1"
                 headerItems={[
                     { text: 'هم راه',  },
 

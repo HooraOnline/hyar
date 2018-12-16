@@ -92,9 +92,9 @@ class MedicalTests extends Component {
                 footerStyle={{ backgroundColor: '#0c6366' }}
                 footerIconColor='#fff'
                 title="سلامت"
-                headerIconColor="#2a8892"
+                headerIconColor="#fff"
                 headerItems={[
-                    { text: 'آزمایش پزشکی', },
+                    { text: 'آزمایش پزشکی', color: '#fff', },
                     {
                         icon: 'ios-arrow-round-back-outline', width: 30,
                         onPress: () => { Actions.pop() }
@@ -109,11 +109,11 @@ class MedicalTests extends Component {
                     animateHeaderStartColor='#0c6366'
                     renderMonitor={() => {
                         return <View style={{ flex: 1, width: null, height: null }} >
-                            <ImageBackground imageStyle={{ borderRadius: 0 }} opacity={0.5} resizeMode="cover" source={{ uri: Api.getFilePath('design') + 'health1.jpg' }} style={{ backgroundColor: "#0c6366", flex: 1, height: null, width: null, }}>
+                            <ImageBackground imageStyle={{ borderRadius: 0 }} opacity={0.4} resizeMode="cover" source={{ uri: Api.getFilePath('design') + 'healthcare.jpg' }} style={{ backgroundColor: "#0c6366", flex: 1, height: null, width: null, }}>
                                 <Grid style={{ flex: 1, marginTop: 70, margin: 15 }}>
                                     <Row style={{ justifyContent: 'center', alignItems: 'center', height: 70 }} >
                                         <Col style={{ width: 70, }}>
-                                            <Image source={{ uri: Api.getFilePath('profile') + this.props.cUser.profileImage }} style={styles.avatar} />
+                                            <Image source={{ uri: Api.getFilePath('profile') + this.props.cUser.profileImage }} style={{ width: 50, height: 50, borderRadius: 25 }} />
                                         </Col>
                                         <Col>
                                             <Text style={{ fontSize: 17, fontFamily: 'iran_sans_bold', color: '#fff', paddingHorizontal: 5, }}>{this.props.cUser.firstName + ' ' + this.props.cUser.lastName}</Text>
@@ -148,7 +148,7 @@ class MedicalTests extends Component {
                         console.log(this.state.selectedInfo.sgot)
 
                         return <View style={{ flex: 1, }}>
-                            
+
                             <View style={styles.tile} >
                                 <Text style={{ color: 'green', fontFamily: 'iran_sans', fontSize: 13, paddingTop: 3 }}>آنزیم کبدی (SGOT)</Text>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -242,19 +242,16 @@ class MedicalTests extends Component {
                     }}
 
                     renderFixedBar={(animateForm) => {
-                        return <FilterLine filterList={(filter, i, index, list, filterLine) => this.filterList(filter, i, index, list, filterLine)} textStyle={{ color: '#fff',paddingHorizontal: 12,padding:2.4 }} style={{ backgroundColor: '#85929E', height: 30, flex: 1 }}
-                            items={this.state.filterItems}
-                        >
-                        <Row style={{ height: 20, backgroundColor: '#fff', }}>
-                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#117A65', margin: 5, width: 10, height: 10 }}></View><Text style={{ color: '#58D68D', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>سلامت</Text></Col>
-                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#F1C40F', margin: 5, width: 10, height: 10 }}></View><Text style={{ color: '#F4D03F', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>نیاز به مراقبت بیشتر</Text></Col>
-                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#E74C3C', margin: 5, width: 10, height: 10 }}></View><Text style={{ color: '#E6787D', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>هشدار</Text></Col>
+                        return <View style={{}} >
+                            <FilterLine filterList={(filter, i, index, list, filterLine) => this.filterList(filter, i, index, list, filterLine)} textStyle={{ color: '#fff', paddingHorizontal: 12, padding: 2.4 }} style={{ backgroundColor: '#85929E', height: 30, flex: 1 }}
+                                items={this.state.filterItems}
+                            />
+                            <Row style={{ height: 40, backgroundColor: '#fff', }}>
+                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#117A65', margin: 5, marginTop: 14, width: 10, height: 10 }}></View><Text style={{ color: '#58D68D', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>سلامت</Text></Col>
+                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#F1C40F', margin: 5, width: 10, marginTop: 14, height: 10 }}></View><Text style={{ color: '#F4D03F', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>نیاز به مراقبت بیشتر</Text></Col>
+                                <Col style={{ flexDirection: 'row', justifyContent: 'center' }}><View style={{ backgroundColor: '#E74C3C', margin: 5, width: 10, marginTop: 14, height: 10 }}></View><Text style={{ color: '#E6787D', fontFamily: 'iran_sans_bold', fontSize: 11, alignSelf: 'center', paddingBottom: 2 }}>هشدار</Text></Col>
                             </Row>
-                        </FilterLine>
-
-
-
-
+                        </View>
                     }
 
                     }

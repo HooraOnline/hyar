@@ -10,21 +10,21 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 export default class AnimatForm extends Component {
     //monitorHight = this.props.monitorHight || null;
     // HEADER_HEIGHT = Platform.OS === "ios" ? 64 : 50;
-    HEADER_HEIGHT =this.props.headerHeight ||50;
+    HEADER_HEIGHT = this.props.headerHeight || 50;
     SCROLL_HEIGHT = this.props.monitorHight - this.HEADER_HEIGHT;
-    THEME_COLOR = this.props.headerColor || "rgba(15,186,255, 0.8)";
+    THEME_COLOR = this.props.headerColor || "rgba(255,255,255, 0.8)";
     FADED_THEME_COLOR = "rgba(255,186,255, 1)";
     nScroll = new Animated.Value(0);
 
     scroll = new Animated.Value(0);
     textColor = this.scroll.interpolate({
         inputRange: [0, this.SCROLL_HEIGHT / 5, this.SCROLL_HEIGHT],
-        outputRange: [this.THEME_COLOR, this.FADED_THEME_COLOR, "white"],
+        outputRange: [this.THEME_COLOR, this.FADED_THEME_COLOR, "#fff"],
         extrapolate: "clamp"
     });
     tabBg = this.scroll.interpolate({
         inputRange: [0, this.SCROLL_HEIGHT],
-        outputRange: [this.props.animateHeaderStartColor || "white", this.THEME_COLOR],
+        outputRange: [this.props.animateHeaderStartColor || "#fff", this.THEME_COLOR],
         extrapolate: "clamp"
     });
     tabY = this.nScroll.interpolate({
@@ -86,22 +86,10 @@ export default class AnimatForm extends Component {
                     </Animated.View>
                     <Tabs
                         prerenderingSiblingsNumber={3}
-                        renderTabBar={(props) => <Animated.View
-                            style={{ transform: [{ translateY: this.tabY }], zIndex: 1, width: "100%", backgroundColor: "white" }}>
-                            <ScrollableTab {...props}
-                                renderTab={(name, page, active, onPress, onLayout) => (
-                                    <Animated.View key={Math.random()}
-                                        style={this.props.fixedBarStyle || {
-                                            flex: 1,
-                                            height: null,
-                                            backgroundColor: this.tabBg
-                                        }}>
-                                        <View style={{ flex: 1 }}>
-                                            {this.props.renderFixedBar(this)}
-                                        </View>
-                                    </Animated.View>
-                                )}
-                                underlineStyle={{}} />
+                        renderTabBar={(props) => <Animated.View style={{ transform: [{ translateY: this.tabY }], zIndex: 1, width: "100%", backgroundColor: "#fff" }}>
+                            <View style={{ flex: 1,height:null }}>
+                                {this.props.renderFixedBar(this)}
+                            </View>
                         </Animated.View>
                         }>
                         <Tab heading="عنوان">

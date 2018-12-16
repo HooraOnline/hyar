@@ -20,12 +20,7 @@ class Services extends Component {
             albumHeight: 200,
         }
     }
-    closeDrawer = () => {
-        this.drawer._root.close()
-    };
-    openDrawer = () => {
-        this.drawer._root.open()
-    };
+
 
 
     componentWillMount() {

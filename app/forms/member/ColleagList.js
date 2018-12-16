@@ -36,24 +36,17 @@ class ColleagList extends Component {
             headerTransparent: true,
         }
     }
-    closeDrawer = () => {
-        this.drawer._root.close()
-    };
-    openDrawer = () => {
-        this.drawer._root.open()
-    };
+
 
 
     render() {
         return (
             <MasterPage
-
-
                 showMenu={true}
                 footertabIndex={2}
                 isList={true}
                 showReturnBtn={false}
-                headerTransparent={true}
+                headerTransparent={false}
                 headerColor='#35536d'
                 footerStyle={{ backgroundColor: '#35536d' }}
                 footerIconColor='#fff'
@@ -66,14 +59,14 @@ class ColleagList extends Component {
                     //{ icon: 'ios-arrow-round-back-outline', width: 30, color: '#fff', onPress: () => { if (this.state.selectedEntity) Actions.NewsList(); else Actions.MainForm() } },
                 ]}
             >
-
                 <ListLoader
                     super={this}
+                    haveAnimate={false}
                     monitorHight={0.2}
                     animateHeaderHeight={0.1}
                     headerColor='#35536d'
                     animateHeaderStartColor='#35536d'
-                    sortbarStyle={{ backgroundColor: '#efefef', height: 35 }}
+                    sortbarStyle={{ backgroundColor: '#efefef', height: 30 }}
                     //sortbarItems={[{ text: 'نام', sort: 'firstName desc', selected: true }, { text: 'نام خانوادگی', sort: 'lastName desc' }]}
                     apiPath='members'
                     onsort={() => { }}
@@ -89,28 +82,10 @@ class ColleagList extends Component {
                     //serchBarItems={["firstName","lastName"]}
                     seperatorHight={0.7}
                     seperatorColor='#ddd'
-                    rKey="currentEntity2"
+                    reduxListKey='colleagList'
+                    reduxSelectedKey="currentEntity2"
                     sort="id asc"
                     itemHeight={70}
-                    loadingTheme={(list) => {
-                        return <View style={{ padding: 10, flex: 1, flexDirection: 'row', borderBottomWidth: 0.2 }}>
-                            <Left>
-                                <Text style={publicStyle.boldText}>............ ............</Text>
-                                <Text note>.................</Text>
-                            </Left>
-
-                            <View style={{ width: 70 }}>
-                                <View style={{ width: 70, backgroundColor: '#efefef', borderRadius: 35, margintop: 'center', justifyContent: 'center' }}>
-                                    {
-                                        list.state.inLoading &&
-                                        <ActivityIndicator size="small" color="#000" style={{}} />
-                                    }
-                                </View>
-                            </View>
-                        </View>
-                    }
-
-                    }
                     renderItem={(item) => <View>
                         <View style={{ padding: 10,paddingHorizontal:20, flex: 1, flexDirection: 'row', borderBottomWidth: 0 }}>
                             <Left>

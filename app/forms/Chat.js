@@ -25,12 +25,7 @@ class Chat extends Component {
 
         }
     }
-    closeDrawer = () => {
-        this.drawer._root.close()
-    };
-    openDrawer = () => {
-        this.drawer._root.open()
-    };
+
 
 
     componentDidMount() {

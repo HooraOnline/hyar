@@ -14,9 +14,9 @@ class Seen extends Component {
   render() {
 
     return (
-      <View style={[{flexDirection:'row',justifyContent:"center",alignItems:'center'},this.props.style]}>
-        <Icon name="md-eye" style={{ fontSize: 16, color: this.props.color || '#85929E',width:30,  }} ></Icon>
-        <Text style={{textAlign:'left', fontSize: 12, fontFamily: 'iran_sans', color:this.props.color || '#85929E', paddingHorizontal: 10,flex:1 }}>{this.props.seen || 0}</Text>
+      <View activeOpacity={0.7} style={[{flexDirection:'row',justifyContent:"center",alignItems:'center'},this.props.style]}>
+        <Icon name="md-eye" style={{ fontSize: 15, color: this.props.color || '#85929E',  }} ></Icon>
+        <Text style={{textAlign:'left', fontSize: 15, fontFamily: 'iran_sans', color:this.props.color || '#85929E', paddingHorizontal: 10, }}>{this.props.seen || 0}</Text>
       </View>
     );
   }

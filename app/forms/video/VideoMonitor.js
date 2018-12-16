@@ -26,7 +26,7 @@ class VideoMonitor extends Component {
       isInProgress: false,
       headerTransparent: true,
       monitorEntity: props.monitorEntity,
-      screen:Expo.ScreenOrientation.Orientation.ALL,
+      screen: Expo.ScreenOrientation.Orientation.ALL,
       monitorHight: 360
       //this.getMonitorHightFromTextLonf(props.monitorEntity.desc)
     };
@@ -45,7 +45,7 @@ class VideoMonitor extends Component {
     return Util.device.height / 2.7 + 80 + monitorHeight;
     //return 51;
   }
-  
+
   render() {
     return (
       <MasterPage
@@ -60,11 +60,11 @@ class VideoMonitor extends Component {
         footerIconColor='#fff'
         containerStyle={{ backgroundColor: '#000' }}
         title="ویدئو"
-        headerIconColor="#2a8892"
+        headerIconColor="#00ced1"
         headerItems={[
           { text: 'ویدئو', color: '#00ced1', },
           {
-            icon: 'ios-arrow-round-back-outline', width: 30, color: '#2a8892',
+            icon: 'ios-arrow-round-back-outline', width: 30, color: '#00ced1',
             onPress: () => { Actions.pop() }
           },
         ]}
@@ -81,12 +81,13 @@ class VideoMonitor extends Component {
             { text: 'هنر', field: 'videoGroup', value: '07' },
             { text: 'کتابخوانی', field: 'videoGroup', value: '08' },
             { text: 'مسابقات', field: 'videoGroup', value: '09' },]}
-          filterbarStyle={{ backgroundColor: '#000', height: 50 }}
+          filterbarStyle={{ backgroundColor: '#000', height: 30 }}
           filterbartextStyle={{ color: '#fff' }}
           apiPath='Videos'
           title="ویدئو"
+          //loadFromLocalStore={true}
           monitorHight={this.state.monitorHight}
-          headerIconColor="#2a8892"
+          headerIconColor="#00ced1"
           headerColor='#000'
           animateHeaderStartColor='#000'
           onsort={() => { }}
@@ -97,7 +98,8 @@ class VideoMonitor extends Component {
           }}
           pageSize={7}
           filter={{}}
-          rKey="currentEntity"
+          reduxSelectedKey="currentEntity"
+          reduxListKey='videoList'
           sort="id desc"
           itemHeight={100}
           renderMonitor={() => <View style={{ flex: 1, width: null, height: null }} >
@@ -120,11 +122,11 @@ class VideoMonitor extends Component {
           renderItem={(entity) => <View>
             <View style={{ flexDirection: 'row', flex: 1, margin: 10, borderRadius: 3, alignItems: 'center', }} >
               <Image style={{ borderRadius: 4, resizeMode: 'cover', height: 100, width: 100, }} source={{ uri: Api.getFilePath('video') + entity.image }} />
-              <View style={{ flex: 1, }}>
-                <Text style={{ fontSize: 10, paddingHorizontal: 10, color: '#fff', fontFamily: 'iran_sans_bold' }}>{entity.title.substring(0, 50)}</Text>
-                <Text style={{ paddingHorizontal: 10, fontSize: 12, color: '#888', fontFamily: 'iran_sans' }}>{entity.desc.substring(0, 60)}</Text>
-                <Text style={{ textAlign: 'center', paddingHorizontal: 5, fontSize: 10, fontFamily: 'iran_sans', color: '#000', backgroundColor: '#fff', width: 40, borderRadius: 2, margin: 5 }}>{entity.time} </Text>
-                <Seen color='#fff' seen={entity.seen || 0 + ' بازدید'} ></Seen>
+              <View style={{ flex: 1, marginHorizontal: 10 }}>
+                <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'iran_sans_bold' }}>{entity.title.substring(0, 50)}</Text>
+                <Text style={{ fontSize: 12, color: '#888', fontFamily: 'iran_sans' }}>{entity.desc.substring(0, 60)}</Text>
+                <Text style={{ fontSize: 12, fontFamily: 'iran_sans', color: '#000', textAlign: 'center', backgroundColor: '#fff', width: 40, borderRadius: 2, margin: 5 }}>{entity.time} </Text>
+                <Seen style={{ justifyContent: 'flex-start', }} color='#fff' seen={entity.seen || 0 + ' بازدید'} ></Seen>
 
               </View>
               <Icon name={"md-more"} style={{ fontSize: 20, color: '#fff', width: 30, }} ></Icon>
@@ -132,8 +134,9 @@ class VideoMonitor extends Component {
           </View>
           }
           onSelect={(entity, row, form) => {
-            this.setState({ monitorEntity: entity })
-            //Actions.VideoMonitor({ monitorEntity: entity })
+            // this.setState({ monitorEntity: entity })
+            Actions.pop();
+            Actions.VideoMonitor({ monitorEntity: entity })
           }}
 
         />

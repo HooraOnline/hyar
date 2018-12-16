@@ -21,7 +21,7 @@ export default class ColorBar extends Component {
     return (
 
       <View style={{flex:1,width:'100%',}} >
-        <Row style={{ height: 20, }}>
+        <Row style={{ height: 25, }}>
           <Col style={{ flex: (1 - (Number(this.props.pin) / this.state.ranges[0].range[1])), }}>
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'flex-end', }}>
               <Text style={{ fontSize: 16, fontFamily: 'iran_sans', color: '#0c6366', paddingHorizontal: 2 }}>{this.props.pin}</Text>
@@ -33,9 +33,9 @@ export default class ColorBar extends Component {
           {
             this.state.ranges.map((r, index) => {
               if (index == 0)
-                return <Col key={index} style={{ borderTopStartRadius: 3, borderBottomStartRadius: 3, flex: ((r.range[1] - r.range[0]) / this.state.ranges[0].range[1]), backgroundColor: r.color, }}></Col>
+                return <Col key={index} style={{ borderTopStartRadius: 5, borderBottomStartRadius: 5, flex: ((r.range[1] - r.range[0]) / this.state.ranges[0].range[1]), backgroundColor: r.color, }}></Col>
               if (index == this.state.ranges.length - 1)
-                return <Col key={index} style={{ borderTopEndRadius: 3, borderBottomEndRadius: 3, flex: ((r.range[1] - r.range[0]) / this.state.ranges[0].range[1]), backgroundColor: r.color, }}></Col>
+                return <Col key={index} style={{ borderTopEndRadius: 5, borderBottomEndRadius: 5, flex: ((r.range[1] - r.range[0]) / this.state.ranges[0].range[1]), backgroundColor: r.color, }}></Col>
               return <Col key={index} style={{ flex: ((r.range[1] - r.range[0]) / this.state.ranges[0].range[1]), backgroundColor: r.color, }}></Col>
             })
           }

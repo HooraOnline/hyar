@@ -258,4 +258,22 @@ export function clearStore() {
   }
 }
 
+//****************************************************************abdi */
+export function fetchPagedList2(apiPath, storeKey, condition, sort,pageIndex,pageSize) {
+  return (dispatch, getState) => {
+    //let state = getState();
+    let limit=pageSize || 10;
+    //let skip=(pageIndex || 0) * (pageSize || 10);
+    return Api.fetchCollection2(apiPath, condition, sort,limit,pageIndex+1)
+      .then(list => {
+        if (storeKey){
+          doDispatch(storeKey, list);
+        }
+        return list;
+      })
+      .catch((ex)=>{
+        throw ex;
+      });
+  }
+}
 

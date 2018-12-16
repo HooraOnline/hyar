@@ -48,11 +48,12 @@ class EntityComments extends Component {
                 isList={true}
                 showReturnBtn={true}
                 headerTransparent={false}
-                headerColor={this.props.headerColor || '#fff'}
-                title="نظرات کاربران"
+                headerIconColor="#fff"
+                headerColor={this.props.headerColor || '#2a8892'}
+                title={this.props.formTitle ||"نظرات کاربران"}
                 containerStyle={{backgroundColor:this.props.containerStyle}}
                 headerItems={[
-                    { text: 'متن خبر',  },
+                    { text:this.props.formTitle || 'نظرات کاربران',color:'#fff' },
 
                 ]}
                 onScroll={(e) => {
@@ -65,10 +66,12 @@ class EntityComments extends Component {
                     modelName={this.props.modelName}
                     model={this.props.entity}
                     entity2={this.props.entity}
-                    monitorHight={this.props.monitorHight || 350}
+                    headerColor={this.props.headerColor}
+                    monitorHight={ this.props.entityMonitor?this.props.monitorHight: 0.2}
+                    animateHeaderHeight={ this.props.entityMonitor?50: 0.1}
                     pageSize={5}
-                    renderEntity={(selectedComment) => <View >
-                        <View style={{ flex: 1, borderColor: '#e56c45', borderBottomWidth: 5, marginBottom: 10 }}>
+                    renderListHeader={(selectedComment) => <View >
+                        <View style={{ }}>
                             {
                                 this.props.entityMonitor
                             }

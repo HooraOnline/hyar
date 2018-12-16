@@ -39,3 +39,7 @@ export const appConfig = reduser.appConfig;
  //masterPage reduser
  export const showFooter = reduser.showFooter;
  export const userHealthInfo = reduser.userHealthInfo;
+ export const newsList = reduser.newsList;
+ export const videoList = reduser.videoList;
+ export const commentList = reduser.commentList;
+ export const colleagList = reduser.colleagList;

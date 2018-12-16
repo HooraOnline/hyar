@@ -16,6 +16,7 @@ import { Album } from '../../components/Album';
 import ListLoader from '../../components/Form/ListLoader';
 import NewsViewer from './NewsViewer';
 import Like from '../../components/Form/Like';
+import { Util } from '../../lib/util';
 
 
 class NewsList extends Component {
@@ -39,7 +40,7 @@ class NewsList extends Component {
             for (let i = 0; i < nList.length; ++i)
                 topNews.push({
                     image: Api.getFilePath('news') + nList[i].image,
-                    onPress: () => Actions.EntityComments({ entity: nList[i] ,apiPath:'news',modelName:'news',headerColor:'#ffb623', entityMonitor:<NewsViewer entity={nList[i]} />}),
+                    onPress: () => Actions.EntityComments({formTitle:'متن خبر', entity: nList[i] ,apiPath:'news',modelName:'news',headerColor:'#ffb623', entityMonitor:<NewsViewer entity={nList[i]} />}),
                     content: <Grid style={{ flex: 1 }} >
                         <Row style={{}} >
                             <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', flex: 1, margin: 15 }}>
@@ -67,35 +68,32 @@ class NewsList extends Component {
                 showReturnBtn={false}
                 headerTransparent={true}
                 headerColor='#ffb623'
-               
                 //scrollY={this.state.scrollY}
                 footerStyle={{ backgroundColor: '#ffb623' }}
                 title="اخبار"
-                headerIconColor="#2a8892"
+                headerIconColor="#fff"
                 headerItems={[
-                    { text: 'اخبار', color: '#2a8892', },
+                    { text: 'اخبار', color: '#fff', },
                     {
-                        icon: 'ios-arrow-round-back-outline', width: 30, color: '#2a8892',
+                        icon: 'ios-arrow-round-back-outline', width: 30, color: '#fff',
                         onPress: () => { Actions.pop() }
                     },
                 ]}
             >
                 <ListLoader
                     ref={(ref) => { this.list = ref; }}
-                    sortbarStyle={{ backgroundColor: '#AAB7B8', height: 50 }}
+                    sortbarStyle={{ backgroundColor: '#AAB7B8', height: 30 }}
                     sortbarItems={[{ text: 'تازه ترین اخبار', sort: 'id desc', selected: true }, { text: 'پربازدیدترین اخبار', sort: 'seen desc' }]}
-                    apiPath='News'
+                    apiPath='news/list'
                     title="اخبار"
                     monitorHight={this.state.monitorHight}
                     headerColor='#ffb623'
-                    headerIconColor="#2a8892"
+                    headerIconColor="#00ced1"
                     onsort={() => { }}
-                    onScroll={(scroolY, event) => {
-                        // console.log(event.velocity.y)
-                    }}
-                    pageSize={7}
+                    pageSize={5}
                     filter={{}}
-                    rKey="currentEntity"
+                    reduxListKey='newsList'
+                    reduxSelectedKey="currentEntity"
                     sort="id desc"
                     itemHeight={100}
                     renderMonitor={() => {
@@ -105,22 +103,22 @@ class NewsList extends Component {
                     }}
                     renderItem={(entity) => <View>
                         <View style={{ flexDirection: 'row', flex: 1, margin: 10, borderRadius: 3, alignItems: 'center', }} >
-                            <Image style={{ borderRadius: 4, resizeMode: 'cover', height: 100, width: 100, }} source={{ uri: Api.getFilePath('news') + entity.image }} />
+                            <Image style={{ borderRadius: 4, resizeMode: 'cover', height: 100, width: 100, }} source={{ uri:  entity.image }} />
                             <View style={{ flex: 1, }}>
-                                <Text style={{ paddingHorizontal: 10, fontSize: 11, fontFamily: 'iran_sans', color: '#000' }}>{new Date(entity.udate).toPersionDate('dateTime')} </Text>
+                                <Text style={{ paddingHorizontal: 10, fontSize: 11, fontFamily: 'iran_sans', color: '#000' }}>{entity.udate?new Date(entity.udate).toPersionDate('dateTime'):''} </Text>
                                 <Text style={{ fontSize: 10, paddingHorizontal: 10, color: '#000', fontFamily: 'iran_sans_bold' }}>{entity.title.substring(0, 90)}</Text>
                                 <Text style={{ paddingHorizontal: 10, fontSize: 12, color: '#555', fontFamily: 'iran_sans' }}>{entity.desc.substring(0, 110)}</Text>
-                                <View style={{ flexDirection: 'row', width: '90%', marginTop: 10 }}>
-                                    <Row style={{}} >
-                                        <Like apiPath="news" storeKey="currentEntity2" entity={entity} /> 
+                                <View style={{ flexDirection: 'row', width: Util.device.width <100? '80%': '50%', marginTop: 10,marginHorizontal:15, }}>
+                                    <Row style={{flex:1}} >
+                                        <Like apiPath="news" storeKey="currentEntity2" entity={entity} showUserLike={false} viewMode={true}/> 
                                     </Row>
-                                    <Row style={{}}>
+                                    <Row style={{flex:0.6}}>
                                         <Icon name="md-eye" style={{ fontSize: 16, color: '#85929E', flex: 1 }} ></Icon>
-                                        <Text style={{ fontSize: 12, fontFamily: 'iran_sans', color: '#85929E', paddingHorizontal: 5 }}>{entity.seen || 0}</Text>
+                                        <Text style={{ fontSize: 12, fontFamily: 'iran_sans', color: '#85929E', }}>{entity.seen || 0}</Text>
                                     </Row>
-                                    <Row style={{}}>
+                                    <Row style={{flex:1}}>
                                         <Icon name="md-chatbubbles" style={{ fontSize: 16, color: '#85929E', flex: 1 }} ></Icon>
-                                        <Text style={{ fontSize: 12, fontFamily: 'iran_sans', color: '#85929E', paddingHorizontal: 5 }}>{entity.commentNumber || 0}</Text>
+                                        <Text style={{ fontSize: 12, fontFamily: 'iran_sans', color: '#85929E',  }}>{entity.commentNumber || 0}</Text>
                                     </Row>
                                 </View>
                             </View>

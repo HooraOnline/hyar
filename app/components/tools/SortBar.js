@@ -22,8 +22,8 @@ export default class SortBar extends Component {
         // if(!this.props.items ||!this.props.items.lenght)
         //     return null
         return (
-            <ScrollView>
-                <Row style={[{ justifyContent: 'center', alignItems: 'center', height: 50, }, this.props.style]} >
+            <ScrollView horizontal={true}  contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}>
+                <Row style={[{ justifyContent: 'center', alignItems: 'center', height: 10, }, this.props.style]} >
                     {
                         this.props.items &&
                         this.props.items.map(i => {
@@ -38,7 +38,7 @@ export default class SortBar extends Component {
                                 }}>
                                 {
                                     i.text &&
-                                    <Text style={{ borderBottomColor: '#00ced1', borderBottomWidth: i.selected ? 4 : 0, padding: 12, color: '#000', fontSize: 14, fontFamily: 'iran_sans', textAlign: 'center', }}>{i.text}</Text>
+                                    <Text style={{ borderBottomColor: '#00ced1', borderBottomWidth: i.selected ? 2 : 0, padding: 2, color: '#000', fontSize: 14, fontFamily: 'iran_sans', textAlign: 'center', }}>{i.text}</Text>
                                 }
                             </Col>
                         })

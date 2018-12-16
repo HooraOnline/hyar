@@ -19,31 +19,31 @@ export default class AppFooter extends Component {
         <Footer style={{ backgroundColor:  this.props.footertBackgroundcolor || '#4e4e4e', height: 73  ,paddingBottom:7, }}>
             <FooterTab style={[{marginTop:7, backgroundColor: '#efefef',marginHorizontal:5,borderRadius:10,borderBottomLeftRadius:30,borderBottomRightRadius:30 },this.props.style]}>
                 <Row style={{  }}>
-                    <Col style={{ alignItems: 'center',marginHorizontal:2, borderTopColor:'#2a8892',borderTopWidth: this.props.selected==1?2:0}}>
+                    <Col style={{ alignItems: 'center',marginHorizontal:2, borderTopColor:'#00ced1',borderTopWidth: this.props.selected==1?2:0}}>
                         <Button badge vertical style={{ justifyContent: 'flex-end' }} onPress={() => { if(Actions.currentParams.title == "MainForm") return;  Actions.popTo('MainForm') }}>
-                            <Icon name="ios-easel-outline" size={32}style={{ fontSize:25,color: this.props.selected==1?'#2a8892':this.props.iconColor ||'#000' }}  />
-                            <Text style={{ fontFamily:'iran_sans', fontSize: 12, color: this.props.selected==1?'#2a8892':this.props.iconColor ||'#000' }}>ویترین</Text>
+                            <Icon name="ios-easel-outline" size={32}style={{ fontSize:25,color: this.props.selected==1?'#00ced1':this.props.iconColor ||'#000' }}  />
+                            <Text style={{ fontFamily:'iran_sans', fontSize: 12, color: this.props.selected==1?'#00ced1':this.props.iconColor ||'#000' }}>ویترین</Text>
                         </Button>
                     </Col>
-                    <Col style={{ alignItems: 'center',marginHorizontal:2, borderTopColor:'#2a8892',borderTopWidth: this.props.selected==2?2:0}} >
+                    <Col style={{ alignItems: 'center',marginHorizontal:2, borderTopColor:'#00ced1',borderTopWidth: this.props.selected==2?2:0}} >
                         <Button badge vertical style={{ justifyContent: 'flex-end' }} onPress={() => {
                               if(Actions.currentParams.title == "ColleagList") return;Actions.pop(); Actions.ColleagList()
                             }}>
-                            <Icon name='ios-people-outline' style={{ fontSize:25,color: this.props.selected==2?'#2a8892':this.props.iconColor ||'#000' }} />
-                            <Text style={{ fontFamily:'iran_sans', fontSize: 12, color: this.props.selected==2?'#2a8892':this.props.iconColor ||'#000' }}>همکاران</Text>
+                            <Icon name='ios-people-outline' style={{ fontSize:25,color: this.props.selected==2?'#00ced1':this.props.iconColor ||'#000' }} />
+                            <Text style={{ fontFamily:'iran_sans', fontSize: 12, color: this.props.selected==2?'#00ced1':this.props.iconColor ||'#000' }}>همکاران</Text>
                         </Button>
                     </Col> 
                     <Col style={{ alignItems: 'center', }}>
                         <Button badge vertical style={{ justifyContent: 'flex-end' }} onPress={() => { }}>
-                            <Icon name='ios-apps-outline' style={{ fontSize:25,color: this.props.selected==3?'#2a8892':this.props.iconColor ||'#000' }} />
-                            <Text style={{ fontFamily:'iran_sans', fontSize: 12, color:this.props.selected==3?'#2a8892':this.props.iconColor ||'#000' }}>خدمات</Text>
+                            <Icon name='ios-apps-outline' style={{ fontSize:25,color: this.props.selected==3?'#00ced1':this.props.iconColor ||'#000' }} />
+                            <Text style={{ fontFamily:'iran_sans', fontSize: 12, color:this.props.selected==3?'#00ced1':this.props.iconColor ||'#000' }}>خدمات</Text>
                         </Button>
                     </Col> 
                     <Col style={{ alignItems: 'center', padding: 1, }}>
                         <Button badge vertical style={{ justifyContent: 'flex-end' }} onPress={()=>{}}>
                             <Badge style={{backgroundColor:'red' }}><Text style={{ fontSize: 12, }} >2</Text></Badge>
-                            <Icon name='ios-text-outline' style={{fontSize:25, color: this.props.selected==4?'#2a8892':this.props.iconColor ||'#000' }} />
-                            <Text style={{fontFamily:'iran_sans', fontSize: 12, color: this.props.selected==4?'#2a8892':this.props.iconColor ||'#000' }}>پیغام</Text>
+                            <Icon name='ios-text-outline' style={{fontSize:25, color: this.props.selected==4?'#00ced1':this.props.iconColor ||'#000' }} />
+                            <Text style={{fontFamily:'iran_sans', fontSize: 12, color: this.props.selected==4?'#00ced1':this.props.iconColor ||'#000' }}>پیغام</Text>
                         </Button>
                     </Col>
                 </Row>

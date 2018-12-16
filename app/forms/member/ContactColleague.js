@@ -7,7 +7,7 @@ import {
 } from 'native-base';
 
 import ExpoImageManager from '../../components/ExpoImageManager';
-import { StyleSheet, View, TouchableOpacity, Image, Linking } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, Image, Linking } from 'react-native';
 import connect from 'react-redux/lib/connect/connect';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../../aRedux';
@@ -52,46 +52,62 @@ class ContactColleague extends Component {
                         <Text style={styles.info}>{this.props.entity.postName}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 40, justifyContent: 'space-between', alignItems: 'center', marginTop: 16 }} >
-                        <View>
-                            <Icon name='ios-chatbubbles' style={{ fontSize: 40, color: '#35536d' }} onPress={
-                                () => dataAdapter.get('Chats/initChatRoom', null, null, { username1: this.props.cUser.id, username2: this.props.entity.id }).then((res) => { console.log(res); Actions.Chat({ roomId: res.room.id, resiver: this.props.entity }) })
-                            } />
+
+                        {/* <TouchableHighlight style={{ width: 30, height: 30, borderRadius: 15 }} activeOpacity={0.9} underlayColor='#35536d' onPress={
+                            () => dataAdapter.get('Chats/initChatRoom', null, null, { username1: this.props.cUser.id, username2: this.props.entity.id }).then((res) => { console.log(res); Actions.Chat({ roomId: res.room.id, resiver: this.props.entity }) })
+                        }  > */}
+                        <View style={{flex:1,alignItems:'center'}}>
+                            <Icon name='ios-chatbubbles' style={{ fontSize: 40, color: '#35536d' }} />
                             <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>گفتگو</Text>
                         </View>
-                        <View>
-                            <Icon name='ios-call' style={{ fontSize: 40, color: '#35536d' }} onPress={() => { Linking.openURL(`tel:${this.props.cUser.mobile}`); }} />
-                            <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>تماس</Text>
-                        </View>
-                        <View>
+                        {/* </TouchableHighlight> */}
+                        {
+                             this.props.cUser.showMobile &&
+                            <View style={{flex:1,alignItems:'center'}}>
+                                <Icon name='ios-call' style={{ fontSize: 40, color: '#35536d' }} onPress={() => { Linking.openURL(`tel:${this.props.cUser.mobile}`); }} />
+                                <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>تماس</Text>
+                            </View>
+                        }
+                        {
+                             this.props.cUser.showMobile &&
+                            <View style={{flex:1,alignItems:'center'}}>
+                                <Icon name='md-chatbubbles' style={{ fontSize: 40, color: '#35536d' }} onPress={() => { Linking.openURL(`sms:${this.props.cUser.mobile}`); }} />
+                                <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>پیامک</Text>
+                            </View>
+                        }
+                        <View style={{flex:1,alignItems:'center'}}>
                             <Icon name='ios-mail' style={{ fontSize: 40, color: '#35536d' }} onPress={() => { Linking.openURL(`mailto:${this.props.cUser.email}`); }} />
                             <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>ایمیل</Text>
                         </View>
-                        <View>
-                            <Icon name='md-chatbubbles' style={{ fontSize: 40, color: '#35536d' }} onPress={() => { Linking.openURL(`sms:${this.props.cUser.mobile}`); }} />
-                            <Text style={{ color: '#35536d', fontSize: 13, fontFamily: 'iran_sans_bold' }}>پیامک</Text>
-                        </View>
+
                     </View>
                     <View style={{ flex: 1 }}></View>
                     <View style={styles.body}>
                         <View style={styles.viewStyle} >
                             <Text style={styles.lableStyle}> کد پرسنلی</Text>
-                            <Text style={{ flex: 1, color: '#fff' }}> {this.props.entity.personalCode}</Text>
+                            <Text style={{ flex: 1, color: '#fff', fontFamily: 'iran_sans' }}> {this.props.entity.personalCode}</Text>
+                        </View>
+                        {
+                             this.props.entity.mobile && this.props.cUser.showMobile &&
+                             <View style={styles.viewStyle} >
+                               <Text style={styles.lableStyle}> موبایل </Text>
+                               <Text style={{ flex: 1, color: '#fff', fontFamily: 'iran_sans' }}> {this.props.entity.mobile}</Text>
+                             </View>
+                        }
+                        <View style={styles.viewStyle} >
+                            <Text style={styles.lableStyle}> تلفن</Text>
+                            <Text style={{ flex: 1, color: '#fff', fontFamily: 'iran_sans' }}> {this.props.entity.phoneNumber}</Text>
                         </View>
 
-                        <View style={styles.viewStyle} >
-                            <Text style={styles.lableStyle}> موبایل </Text>
-                            <Text style={{ flex: 1, color: '#fff' }}> {this.props.entity.mobile}</Text>
-                        </View>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'flex-end',
+                            paddingVertical: 15,
+                            borderBottomColor: '#EFEFEF',
 
-
-                        <View style={styles.viewStyle} >
-                            <Text style={styles.lableStyle}> تلفن </Text>
-                            <Text style={{ flex: 1, color: '#fff' }}> {this.props.entity.phoneNumber}</Text>
-                        </View>
-
-                        <View style={styles.viewStyle} >
+                        }} >
                             <Text style={styles.lableStyle}> ایمیل </Text>
-                            <Text style={{ flex: 3, color: '#fff' }}> {this.props.entity.email}</Text>
+                            <Text style={{ flex: 3, color: '#fff', fontFamily: 'iran_sans' }}> {this.props.entity.email}</Text>
                         </View>
                     </View>
                 </View >

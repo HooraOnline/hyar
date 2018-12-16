@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Button, Row, Col,
+  Button, Row, Icon
 
 
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { View, StyleSheet, ActivityIndicator, Dimensions, } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, TouchableOpacity, } from 'react-native';
 
 import * as Progress from 'react-native-progress';
 import Image from 'react-native-image-progress';
@@ -20,7 +20,7 @@ class ExpoImageManager extends Component {
     super(props)
     this.state = {
       progress: 0,
-      imagePath:this.getInitPath(),
+      imagePath: this.getInitPath(),
       envidenceImage: null,
       num: 0,
       selected: [],
@@ -31,31 +31,41 @@ class ExpoImageManager extends Component {
     if (this.props.entity[this.props.imageField])
       return Api.fileContainer + this.props.uploadFolder + "/download/" + this.props.entity[this.props.imageField];
     if (this.props.noImage)
-     return Api.fileContainer + this.props.uploadFolder + "/download/" + this.props.noImage;
+      return Api.fileContainer + this.props.uploadFolder + "/download/" + this.props.noImage;
     return Api.fileContainer + "public/download/no-image-icon.png"
   }
   render() {
     return (
-      <Col style={{ borderRadius: 4,alignItems:'center', justifyContent: "center", height:this.props.height || 300 }} onPress={() => { if(this.props.editable) Actions.ExpoImageUploader({uploadFolder:this.props.uploadFolder, imagePath: Api.fileContainer + this.props.uploadFolder + "/download/" + this.props.entity[this.props.imageField], onsuccess: (uplodedImageName) => { this.props.entity[this.props.imageField] = uplodedImageName; this.props.updateEntity(this.props.apiPath, this.props.entity, this.props.storeKey) } }) }} >
-         <Image style={{  width: this.props.width || Util.device.width, height: this.props.height || 300, }}
+      <TouchableOpacity style={[{ alignItems: 'center', justifyContent: "center", }, this.props.style]} onPress={() => {
+        if (this.props.editable)
+          Actions.ExpoImageUploader({
+            uploadFolder: this.props.uploadFolder,
+            imagePath: Api.fileContainer + this.props.uploadFolder + "/download/" + this.props.entity[this.props.imageField],
+            onsuccess: (uplodedImageName) => {
+              this.props.entity[this.props.imageField] = uplodedImageName; this.props.updateEntity(this.props.apiPath, this.props.entity, this.props.storeKey)
+                .then((entity) => { if (this.props.onsuccess) this.props.onsuccess(entity) })
+            }
+          })
+      }} >
+        <Icon name='md-camera' style={{ zIndex: 1000, fontSize: 35, color: 'green', alignSelf: 'center', position: 'absolute', top: 0, left: 0 }} />
+        <Image style={[{}, this.props.imageStyle]}
           source={{ uri: this.getInitPath() }}
           indicator={Progress.Pie}
-          // resizeMode="contain"
           resizeMode="contain"
-          indicatorProps={{ 
+          indicatorProps={{
             size: 80,
             borderWidth: 0,
             color: 'rgba(150, 150, 150, 1)',
             unfilledColor: 'rgba(200, 200, 200, 0.2)'
           }}
-        />  
+        />
         {
           this.state.isLoading ?
             <Button transparent style={{ borderWidth: 0 }}>
               <ActivityIndicator style={{ padding: 2 }} />
             </Button> : null
         }
-      </Col>
+      </TouchableOpacity>
     )
 
   }

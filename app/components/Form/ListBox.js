@@ -54,8 +54,8 @@ class ListBox extends Component {
   }
   onPressRow = (item, row) => {
     let selectedItem = item != this.state.selectedItem ? item : null;
-    let rKey = this.props.rKey || "currentEntity";
-    this.props.doDispatch(rKey, item);
+    let reduxSelectedKey = this.props.reduxSelectedKey || "currentEntity";
+    this.props.doDispatch(reduxSelectedKey, item);
     if (this.props.onPressRow)
       this.props.onPressRow(item, row, this)
     if (selectedItem)

@@ -44,7 +44,7 @@ export default class TestForm extends Component {
                 //scrollY={this.state.scrollY}
                 footerStyle={{ backgroundColor: '#ffb623' }}
                 title="اخبار"
-                headerIconColor="#2a8892"
+                headerIconColor="#00ced1"
                 headerItems={[
                     { text: 'اخبار', color: '#00ced1', },
                     {
@@ -56,11 +56,11 @@ export default class TestForm extends Component {
             >
                 <ListLoader2
                     ref={(ref) => { this.list = ref; }}
-                    sortbarStyle={{ backgroundColor: '#AAB7B8', height: 35 }}
+                    sortbarStyle={{ backgroundColor: '#AAB7B8', height: 30 }}
                     sortbarItems={[{ text: 'تازه ترین اخبار', sort: 'id desc', selected: true }, { text: 'پربازدیدترین اخبار', sort: 'seen desc' }]}
                     apiPath='News'
                     title="اخبار"
-                    headerIconColor="#2a8892"
+                    headerIconColor="#00ced1"
                     onsort={() => { }}
                     onScroll={(scroolY, event) => {
                         // console.log(event.velocity.y)
@@ -74,7 +74,7 @@ export default class TestForm extends Component {
                     }}
                     pageSize={20}
                     filter={{}}
-                    rKey="currentEntity2"
+                    reduxSelectedKey="currentEntity2"
                     sort="id desc"
                     itemHeight={100}
                     renderSelected={(entity) => <View  >
